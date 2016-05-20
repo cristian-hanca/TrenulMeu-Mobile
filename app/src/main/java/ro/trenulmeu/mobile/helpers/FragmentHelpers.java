@@ -10,7 +10,7 @@ import ro.trenulmeu.mobile.R;
 /**
  * Helper Class for Fragments Management.
  */
-public class FragmentsHelper {
+public class FragmentHelpers {
 
     /**
      * Pops all the Fragments up to and including the one of the specified Tag.
@@ -63,6 +63,6 @@ public class FragmentsHelper {
     /**
      * Static Class.
      */
-    private FragmentsHelper() {}
+    private FragmentHelpers() {}
 
 }
