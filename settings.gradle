@@ -1,1 +1,1 @@
-include ':app', ':daogenerator', ':models'
+include ':app', ':daogenerator', ':models', ':timespan'
