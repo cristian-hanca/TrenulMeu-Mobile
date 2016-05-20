@@ -5,6 +5,8 @@ package ro.trenulmeu.mobile;
  */
 public class Constants {
 
+    public static final String dbName = "train.db";
+
     public static final String gotoSplash = "gotoSplash";
 
     /**
