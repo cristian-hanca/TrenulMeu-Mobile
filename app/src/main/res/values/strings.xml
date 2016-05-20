@@ -6,13 +6,14 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="error_database_open">Error opening the Database! Please restart the application in order to re-download the database.</string>
+    <string name="error_database_expired">Database is Expired, thus information may not be accurate and some features may not work. Please check periodically for updates.</string>
+
     <string name="logo">Logo</string>
     <string name="loading">Loading</string>
     <string name="error">Error</string>
     <string name="info">Information</string>
     <string name="ok">OK</string>
     <string name="exit">Exit</string>
-    <string name="error_database_open">Error opening the Database! Pleasse restart the application in order to redownload the databasse.</string>
 </resources>
