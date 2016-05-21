@@ -1,5 +1,8 @@
 package ro.trenulmeu.mobile.models;
 
+import org.joda.time.DateTime;
+
+import java.util.Date;
 import java.util.List;
 import ro.trenulmeu.mobile.models.DaoSession;
 import de.greenrobot.dao.DaoException;
@@ -407,6 +410,23 @@ public class Train {
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetStops() {
         Stop = null;
+    }
+
+    public boolean runsOnDate(Date date) {
+        for (TrainAvailability a : getAvailability()) {
+            if (a.runsOnDate(date)) {
+                short now = (short) new DateTime(date).getMinuteOfDay();
+                short from = getFromTime().getTicks();
+                short to = getToTime().getTicks();
+
+                if (now < from && from > to) {
+                    return from < to;
+                } else if (from < now) {
+                    return now < to;
+                }
+            }
+        }
+        return false;
     }
     // KEEP METHODS END
 
