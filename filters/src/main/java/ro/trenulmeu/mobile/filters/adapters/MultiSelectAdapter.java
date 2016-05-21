@@ -43,6 +43,17 @@ public class MultiSelectAdapter<T> extends RecyclerView.Adapter<MultiSelectAdapt
         return dataSet.size();
     }
 
+    public List<CheckItem<T>> getData() {
+        return dataSet;
+    }
+
+    public void setAll(boolean checked) {
+        for (CheckItem<T> item : dataSet) {
+            item.setCheck(checked);
+        }
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CheckBox checkBox;
 
@@ -51,15 +62,14 @@ public class MultiSelectAdapter<T> extends RecyclerView.Adapter<MultiSelectAdapt
 
             checkBox = (CheckBox) itemView.findViewById(R.id.check);
             checkBox.setOnClickListener(this);
+
             itemView.setTag(this);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            boolean checked = checkBox.isChecked();
-            dataSet.get(this.getAdapterPosition()).setCheck(checked);
-            //checkBox.setChecked(!checked);
+            dataSet.get(this.getAdapterPosition()).setCheck(checkBox.isChecked());
         }
 
     }

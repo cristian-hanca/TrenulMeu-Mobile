@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true">
 
         <android.support.v7.widget.SearchView
             android:layout_width="0dp"
@@ -19,7 +21,8 @@
             android:layout_weight="1"
             android:inputType="number"
             android:queryHint="@string/hint_train"
-            android:iconifiedByDefault="false"/>
+            android:iconifiedByDefault="false"
+            android:focusableInTouchMode="true"/>
 
         <LinearLayout
             android:orientation="horizontal"
