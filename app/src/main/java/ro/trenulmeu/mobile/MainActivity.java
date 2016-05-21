@@ -14,6 +14,7 @@ import android.widget.Toast;
 import ro.trenulmeu.mobile.fragments.SplashFragment;
 import ro.trenulmeu.mobile.fragments.TrainsFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
+import ro.trenulmeu.mobile.helpers.MenuHandler;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
+    MenuHandler menuHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,28 @@ public class MainActivity extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
+        menuHandler = new MenuHandler(navigationView.getMenu(), new MenuHandler.Actions() {
+            @Override
+            public void onRoutes() {
+
+            }
+
+            @Override
+            public void onTrains() {
+                FragmentHelpers.goToSingleton(new TrainsFragment(), Constants.gotoTrains);
+            }
+
+            @Override
+            public void onStations() {
+
+            }
+
+            @Override
+            public void onStatus() {
+
+            }
+        });
+
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment, new SplashFragment(), Constants.gotoSplash);
@@ -55,6 +79,7 @@ public class MainActivity extends AppCompatActivity
             exit();
         } else {
             FragmentHelpers.goToSingleton(new TrainsFragment(), Constants.gotoTrains);
+            menuHandler.getMenu().getItem(1).setChecked(true);
         }
     }
 
@@ -78,27 +103,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+
+        return menuHandler.handle(item);
     }
+
 }

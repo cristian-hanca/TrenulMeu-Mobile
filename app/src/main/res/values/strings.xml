@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TrenulMeu Mobile</string>
+    <string name="app_slogan">The first real Romanian Rail App.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -21,6 +22,11 @@
     <string name="placeholder_station_long">Long Station Name Hbf</string>
     <string name="placeholder_time">00:00</string>
     <string name="placeholder_time_days">+1</string>
+
+    <string name="menu_routes">Routes</string>
+    <string name="menu_trains">Trains</string>
+    <string name="menu_stations">Stations</string>
+    <string name="menu_status">Status</string>
 
     <string name="filter_train_now">Display only Trains running now</string>
 
