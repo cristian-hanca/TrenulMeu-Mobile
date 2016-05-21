@@ -61,6 +61,36 @@ public class FragmentHelpers {
     }
 
     /**
+     * Returns True if a Fragment of the given Tag was found, else False.
+     */
+    public static boolean existsByTag(String tag) {
+        return getFM().findFragmentByTag(tag) != null;
+    }
+
+    /**
+     * Returns the Fragment of the given Tag, or Null if it does not exist.
+     */
+    public static <T extends Fragment> T findByTag(String tag, Class<T> clazz) {
+        Fragment f = getFM().findFragmentByTag(tag);
+        if (f != null) {
+            try {
+                return clazz.cast(f);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the Fragment of the given Tag, or Default Value if it does not exist.
+     */
+    public static <T extends Fragment> T findByTag(String tag, Class<T> clazz, T defaultValue) {
+        T f = findByTag(tag, clazz);
+        return f == null ? defaultValue : f;
+    }
+
+    /**
      * Gets the Support Fragment Manager.
      */
     private static FragmentManager getFM() {

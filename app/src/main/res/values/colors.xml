@@ -5,6 +5,7 @@
     <color name="colorAccent">#1565C0</color>
 
     <color name="background">#E0E0E0</color>
+    <color name="red">#FF0000</color>
     <color name="text">#212121</color>
     <color name="divider">#BDBDBD</color>
 

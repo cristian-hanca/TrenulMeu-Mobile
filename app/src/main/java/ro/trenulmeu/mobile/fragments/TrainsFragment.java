@@ -3,6 +3,7 @@ package ro.trenulmeu.mobile.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.trenulmeu.mobile.AppContext;
+import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.TrainsAdapter;
+import ro.trenulmeu.mobile.dialogs.TrainsFilterDialog;
+import ro.trenulmeu.mobile.filters.MultiSelectDialog;
+import ro.trenulmeu.mobile.filters.TrainsFilters;
+import ro.trenulmeu.mobile.filters.models.CheckItem;
+import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.models.Train;
+import ro.trenulmeu.mobile.models.TrainOperator;
 
 public class TrainsFragment extends Fragment {
-
-    private static final String trainsFilter_key = "trainsFilter_key";
 
     private String searchString;
 
@@ -31,16 +37,33 @@ public class TrainsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         AppContext.activity.setTitle(R.string.title_trains);
+        if (AppContext.trainFilter == null) {
+            AppContext.trainFilter = new TrainsFilters();
+        }
+        final TrainsFilterDialog tfd = FragmentHelpers.findByTag(Constants.dialogTrainFilter,
+                TrainsFilterDialog.class, new TrainsFilterDialog());
+        tfd.setCallbacks(new TrainsFilterDialog.Callbacks() {
+            @Override
+            public void onDone() {
+                UpdateUI();
+            }
+        });
 
         final View view = inflater.inflate(R.layout.fragment_trains, container, false);
         list = (ManagedRecyclerView) view.findViewById(R.id.list);
         search = (SearchView) view.findViewById(R.id.search);
 
-        adapter = new TrainsAdapter(AppContext.db.getTrainDao().queryBuilder().list());
+        adapter = new TrainsAdapter(AppContext.trainFilter.getFiltered());
         list.setAdapter(adapter);
 
-        search.setIconified(false);
-        search.setIconifiedByDefault(false);
+        view.findViewById(R.id.filter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tfd.show(AppContext.activity.getSupportFragmentManager(), Constants.dialogTrainFilter);
+            }
+        });
+
+        searchString = AppContext.trainFilter.getSearch();
         search.setQuery(searchString, false);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -51,10 +74,8 @@ public class TrainsFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(final String newText) {
                 searchString = newText;
-
-                final List<Train> filteredModelList = AppContext.db.getTrainDao().queryBuilder().list();
-                adapter.animateTo(filteredModelList);
-                list.getListView().scrollToPosition(0);
+                AppContext.trainFilter.setSearch(searchString);
+                UpdateUI();
                 return true;
             }
         });
@@ -62,18 +83,19 @@ public class TrainsFragment extends Fragment {
         return view;
     }
 
-    @SuppressWarnings("unchecked")
+    private void UpdateUI() {
+        final List<Train> filteredModelList = AppContext.trainFilter.getFiltered();
+        adapter.animateTo(filteredModelList);
+        list.getListView().scrollToPosition(0);
+    }
+
     @Override
     public void onAttach(Context context) {
-        searchString = AppContext.cache.get(trainsFilter_key, String.class, "");
-
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
-        AppContext.cache.set(trainsFilter_key, searchString);
-
         super.onDetach();
     }
 

@@ -30,6 +30,7 @@ public class MultiSelectDialog<T> extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setCancelable(false);
     }
 
     @Override
