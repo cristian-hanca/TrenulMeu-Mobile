@@ -1,5 +1,6 @@
 package ro.trenulmeu.mobile.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -13,9 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Date;
+import java.util.concurrent.Callable;
 
+import retrofit2.Call;
+import retrofit2.Response;
 import ro.trenulmeu.mobile.AppContext;
+import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
+import ro.trenulmeu.mobile.api.MobileAPI;
+import ro.trenulmeu.mobile.api.fetcher.DataBaseFetch;
+import ro.trenulmeu.mobile.api.fetcher.FetchUnit;
+import ro.trenulmeu.mobile.helpers.CleanupDatabaseFetchCallbacks;
+import ro.trenulmeu.mobile.helpers.CleanupFetchCallbacks;
 import ro.trenulmeu.mobile.helpers.DatabaseHelpers;
 import ro.trenulmeu.mobile.helpers.NetworkHelpers;
 import ro.trenulmeu.mobile.models.DataBaseStatus;
@@ -25,6 +35,18 @@ import ro.trenulmeu.mobile.models.DataBaseStatus;
  * Used to download / update the Database and initialize tha Application.
  */
 public class SplashFragment extends Fragment {
+
+    private static final String serverStatusFetch_key = "serverStatusFetch_key";
+    private static final String dataBaseFetch_key = "dataBaseFetch_key";
+
+    private DataBaseStatus serverStatus;
+    private FetchUnit<DataBaseStatus> serverStatusFetch;
+    private FetchUnit.FetchCallbacks<DataBaseStatus> serverStatusCallbacks;
+
+    private DataBaseFetch dataBaseFetch;
+    private DataBaseFetch.Callbacks dataBaseFetchCallback;
+
+    private ProgressDialog progressDialog;
 
     // Required empty constructor.
     public SplashFragment() { }
@@ -36,6 +58,26 @@ public class SplashFragment extends Fragment {
         ActionBar actionBar = AppContext.activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
+        }
+
+        AppContext.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog = new ProgressDialog(AppContext.activity);
+                progressDialog.setIcon(R.drawable.download);
+                progressDialog.setMessage(AppContext.activity.getString(R.string.downloading_database));
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMax(100);
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            }
+        });
+        // Leave 100ms for Activity to create the Dialog.
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // If it is the first time, we do checks if we have any reason to be in this Fragment.
@@ -65,20 +107,139 @@ public class SplashFragment extends Fragment {
 
     private void init() {
         if (NetworkHelpers.isNetworkAvailable()) {
-
+            if (serverStatusFetch != null) {
+                checkServerStatus();
+            } else if (dataBaseFetch != null) {
+                downloadDb();
+            } else if (DatabaseHelpers.fileExists()) {
+                checkServerStatus();
+            } else {
+                downloadDb();
+            }
+        } else if (DatabaseHelpers.fileExists()) {
+            openDb(true);
         } else {
-            openDb();
+            displayMsg(R.string.error_database_no_internet, true);
         }
     }
 
-    private void openDb() {
-        try {
-            AppContext.db = DatabaseHelpers.open();
-            checkValidity();
-        } catch (Exception e) {
+    private void checkServerStatus() {
+        if (serverStatus == null) {
+            serverStatusCallbacks = new CleanupFetchCallbacks<DataBaseStatus>(serverStatusFetch_key) {
+                @Override
+                public void onStart() { }
+
+                @Override
+                public void onFail(Exception e) {
+                    openDb(true);
+                }
+
+                @Override
+                public void onSuccess(DataBaseStatus result) {
+                    serverStatus = result;
+                    AppContext.cache.set(Constants.serverStatus_key, serverStatus);
+                    checkIfNewer();
+                }
+            };
+
+            if (serverStatusFetch == null) {
+                serverStatusFetch = new FetchUnit<>(serverStatusCallbacks);
+                serverStatusFetch.fetch(new Callable<Call<DataBaseStatus>>() {
+                    @Override
+                    public Call<DataBaseStatus> call() throws Exception {
+                        return MobileAPI.getStatus();
+                    }
+                });
+                AppContext.cache.set(serverStatusFetch_key, serverStatusFetch);
+            } else {
+                serverStatusFetch.setCallbacks(serverStatusCallbacks);
+            }
+        } else {
+            checkIfNewer();
+        }
+    }
+
+    private void downloadDb() {
+        dataBaseFetchCallback = new CleanupDatabaseFetchCallbacks(dataBaseFetch_key) {
+            @Override
+            public void onStart() {
+                if (!progressDialog.isShowing()) {
+                    AppContext.activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                DatabaseHelpers.delete();
+                displayMsg(R.string.error_database_download, true);
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                if (progressDialog.isShowing()) {
+                    AppContext.activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+                openDb(true);
+            }
+
+            @Override
+            public void onProgress(final int progress) {
+                AppContext.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!progressDialog.isShowing()) {
+                            progressDialog.show();
+                        }
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.setProgress(progress);
+                    }
+                });
+            }
+        };
+
+        if (dataBaseFetch == null) {
+            dataBaseFetch = new DataBaseFetch(MobileAPI.baseURL
+                    + Constants.databaseDownloadPath, DatabaseHelpers.getFile());
+            dataBaseFetch.setCallbacks(dataBaseFetchCallback);
+            dataBaseFetch.fetch();
+
+            AppContext.cache.set(dataBaseFetch_key, dataBaseFetch);
+        } else {
+            if (!progressDialog.isShowing()) {
+                AppContext.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.show();
+                    }
+                });
+            }
+            dataBaseFetch.setCallbacks(dataBaseFetchCallback);
+        }
+    }
+
+    private void checkIfNewer() {
+        if (!openDb(false)) {
+            return;
+        }
+
+        DataBaseStatus status = AppContext.db.getDataBaseStatusDao().queryBuilder().list().get(0);
+        if (status.getDate().before(serverStatus.getDate())) {
             AppContext.db = null;
             DatabaseHelpers.delete();
-            displayMsg(R.string.error_database_open, true);
+            downloadDb();
+        } else {
+            checkValidity();
+            returnToMain();
         }
     }
 
@@ -87,6 +248,32 @@ public class SplashFragment extends Fragment {
         if (status.getValidTo().before(new Date())) {
             displayMsg(R.string.error_database_expired, false);
         }
+    }
+
+    private boolean openDb(boolean checkValidity) {
+        try {
+            AppContext.db = DatabaseHelpers.open();
+
+            // Check if it works...
+            AppContext.db.getDataBaseStatusDao().queryBuilder().list();
+
+            if (checkValidity) {
+                checkValidity();
+                returnToMain();
+            }
+
+            return true;
+        } catch (Exception e) {
+            AppContext.db = null;
+            DatabaseHelpers.delete();
+            if (NetworkHelpers.isNetworkAvailable()) {
+                downloadDb();
+            } else {
+                displayMsg(R.string.error_database_open, true);
+            }
+        }
+
+        return false;
     }
 
     private void displayMsg(@StringRes final int msg, final boolean fatal) {
@@ -118,8 +305,12 @@ public class SplashFragment extends Fragment {
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onAttach(Context context) {
+        serverStatus = AppContext.cache.get(Constants.serverStatus_key, DataBaseStatus.class);
+        serverStatusFetch = AppContext.cache.get(serverStatusFetch_key, FetchUnit.class);
+        dataBaseFetch = AppContext.cache.get(dataBaseFetch_key, DataBaseFetch.class);
         super.onAttach(context);
     }
 
@@ -128,6 +319,15 @@ public class SplashFragment extends Fragment {
         ActionBar actionBar = AppContext.activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.show();
+        }
+        if (serverStatusFetch != null) {
+            serverStatusFetch.setCallbacks(null);
+        }
+        if (dataBaseFetch != null) {
+            dataBaseFetch.setCallbacks(null);
+        }
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
         super.onDetach();
     }

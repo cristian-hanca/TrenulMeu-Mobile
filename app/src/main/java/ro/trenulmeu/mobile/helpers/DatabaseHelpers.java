@@ -17,7 +17,7 @@ public class DatabaseHelpers {
     /**
      * Returns the Database File.
      */
-    private static File getFile() {
+    public static File getFile() {
         return AppContext.activity.getFileStreamPath(Constants.dbName);
     }
 

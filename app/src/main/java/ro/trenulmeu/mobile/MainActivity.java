@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import ro.trenulmeu.mobile.fragments.SplashFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
@@ -47,9 +48,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void returnToMain() {
-        FragmentHelpers.popAll();
+        FragmentHelpers.popInclusive(Constants.gotoSplash);
         if (AppContext.db == null) {
             exit();
+        } else {
+            Toast.makeText(this, "YAY", Toast.LENGTH_LONG).show();
         }
     }
 
