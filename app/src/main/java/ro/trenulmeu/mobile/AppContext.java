@@ -1,5 +1,6 @@
 package ro.trenulmeu.mobile;
 
+import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.DataCache;
 import ro.trenulmeu.mobile.models.DaoSession;
 
@@ -18,6 +19,11 @@ public class AppContext {
      * Open Database Secession.
      */
     public static DaoSession db = null;
+
+    /**
+     * Train Filter to be used in the TrainsFragment.
+     */
+    public static TrainsFilters trainFilter = null;
 
     /**
      * Data Cache Singleton.

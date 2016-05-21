@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,8 @@ import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 
 public class MultiSelectDialog<T> extends DialogFragment {
 
-    private Interaction<T> interaction = null;
-    private List<CheckItem<T>> items = new ArrayList<>();
+    private Input<T> input = null;
+    private Callbacks<T> callbacks = null;
 
     private ManagedRecyclerView list;
     private MultiSelectAdapter<T> adapter;
@@ -39,8 +38,8 @@ public class MultiSelectDialog<T> extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_select, container, false);
         list = (ManagedRecyclerView) view.findViewById(R.id.list);
 
-        ((ImageView) view.findViewById(R.id.icon)).setImageResource(interaction.getIcon());
-        ((TextView) view.findViewById(R.id.title)).setText(interaction.getTitle());
+        ((ImageView) view.findViewById(R.id.icon)).setImageResource(input.getIcon());
+        ((TextView) view.findViewById(R.id.title)).setText(input.getTitle());
 
         view.findViewById(R.id.all).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +57,7 @@ public class MultiSelectDialog<T> extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                interaction.onDone(adapter.getData());
+                callbacks.onDone(adapter.getData());
             }
         });
 
@@ -66,14 +65,20 @@ public class MultiSelectDialog<T> extends DialogFragment {
         return view;
     }
 
-    public void setInteraction(Interaction<T> interaction) {
-        if (interaction != null) {
-            this.interaction = interaction;
+    public void setInput(Input<T> input) {
+        if (input != null) {
+            this.input = input;
+        }
+    }
+
+    public void setCallbacks(Callbacks<T> callbacks) {
+        if (callbacks != null) {
+            this.callbacks = callbacks;
         }
     }
 
     private void updateUI() {
-        adapter = new MultiSelectAdapter<>(interaction.inputItems());
+        adapter = new MultiSelectAdapter<>(input.inputItems());
         list.setAdapter(adapter);
     }
 
@@ -89,11 +94,14 @@ public class MultiSelectDialog<T> extends DialogFragment {
         super.onDestroyView();
     }
 
-   public interface Interaction<T> {
-       @DrawableRes int getIcon();
-       @StringRes int getTitle();
-       List<CheckItem<T>> inputItems();
-       void onDone(List<CheckItem<T>> items);
-   }
+    public interface Input<T> {
+        @DrawableRes int getIcon();
+        @StringRes int getTitle();
+        List<CheckItem<T>> inputItems();
+    }
+
+    public interface Callbacks<T> {
+        void onDone(List<CheckItem<T>> items);
+    }
 
 }

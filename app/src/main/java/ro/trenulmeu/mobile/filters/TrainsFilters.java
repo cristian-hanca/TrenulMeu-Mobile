@@ -85,7 +85,7 @@ public class TrainsFilters {
                 filtered = AppContext.db.getTrainDao().queryBuilder()
                         .where(TrainDao.Properties.OperatorId.in(extractSelectedOperators()))
                         .where(TrainDao.Properties.TypeId.in(extractSelectedTypes()))
-                        .orderAsc(TrainDao.Properties.Name)
+                        .orderAsc(TrainDao.Properties.Id)
                         .list();
             }
         }
