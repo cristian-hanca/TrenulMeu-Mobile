@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import retrofit2.Response;
+
 /**
  * Special Class designed to download the SQLite Database File.
  * We cannot use Retrofit2 since it cannot be used to download files with Progress.
@@ -109,7 +111,7 @@ public class DataBaseFetch {
 
             @Override
             protected void onPostExecute(Void result) {
-                if (!failed) callbacks.onDone();
+                if (!failed) callbacks.onDone(null);
                 super.onPostExecute(result);
             }
         };
@@ -124,15 +126,13 @@ public class DataBaseFetch {
         return task;
     }
 
-    public interface Callbacks {
-        void onStart();
-        void onException(final Exception e);
-        void onCancel();
+    public interface Callbacks extends FetchUnit.FetchCallbacks<Void> {
         void onProgress(int progress);
-        void onDone();
     }
 
     private class BaseCallbacks implements Callbacks {
+        @Override
+        public void onProgress(int progress) { }
         @Override
         public void onStart() { }
         @Override
@@ -140,9 +140,9 @@ public class DataBaseFetch {
         @Override
         public void onCancel() { }
         @Override
-        public void onProgress(int progress) { }
+        public void onError(Response<Void> response) { }
         @Override
-        public void onDone() { }
+        public void onDone(Void result) { }
     }
 
 }
