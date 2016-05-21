@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.greenrobot.dao.query.WhereCondition;
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.filters.models.CheckItem;
 import ro.trenulmeu.mobile.models.Train;

@@ -1,7 +1,5 @@
 package ro.trenulmeu.mobile.filters.models;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**

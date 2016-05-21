@@ -1,8 +1,5 @@
 package ro.trenulmeu.mobile.models;
 
-import org.joda.time.DateTime;
-
-import java.util.Date;
 import java.util.List;
 import ro.trenulmeu.mobile.models.DaoSession;
 import de.greenrobot.dao.DaoException;

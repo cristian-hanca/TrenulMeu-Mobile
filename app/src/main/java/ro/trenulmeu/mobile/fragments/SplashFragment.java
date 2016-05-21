@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;

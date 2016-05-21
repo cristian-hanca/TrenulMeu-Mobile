@@ -1,7 +1,5 @@
 package ro.trenulmeu.mobile.models;
 
-import java.util.Date;
-
 import ro.trenulmeu.mobile.models.DaoSession;
 import de.greenrobot.dao.DaoException;
 
@@ -9,6 +7,7 @@ import de.greenrobot.dao.DaoException;
 
 // KEEP INCLUDES - put your custom includes here
 import org.joda.time.DateTime;
+import java.util.Date;
 // KEEP INCLUDES END
 /**
  * Entity mapped to table "TrainAvailability".
