@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ro.trenulmeu.mobile.fragments.SplashFragment;
+import ro.trenulmeu.mobile.fragments.TrainsFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 
 public class MainActivity extends AppCompatActivity
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         if (AppContext.db == null) {
             exit();
         } else {
-            Toast.makeText(this, "YAY", Toast.LENGTH_LONG).show();
+            FragmentHelpers.goToSingleton(new TrainsFragment(), Constants.gotoTrains);
         }
     }
 
