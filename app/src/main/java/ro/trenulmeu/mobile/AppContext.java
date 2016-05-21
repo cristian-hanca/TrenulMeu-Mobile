@@ -3,6 +3,7 @@ package ro.trenulmeu.mobile;
 import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.DataCache;
 import ro.trenulmeu.mobile.models.DaoSession;
+import ro.trenulmeu.mobile.models.Train;
 
 /**
  * Application-wide Context.
@@ -19,6 +20,11 @@ public class AppContext {
      * Open Database Secession.
      */
     public static DaoSession db = null;
+
+    /**
+     * Selected Train to be viewed.
+     */
+    public static Train selectedTrain;
 
     /**
      * Train Filter to be used in the TrainsFragment.

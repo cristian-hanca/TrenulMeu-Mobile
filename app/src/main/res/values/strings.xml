@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_trains">Trains</string>
+    <string name="title_details">Train Details</string>
 
     <string name="error_database_open">Error opening the Database! Please restart the application in order to re-download the database.</string>
     <string name="error_database_expired">Database is Expired, thus information may not be accurate and some features may not work. Please check periodically for updates.</string>
@@ -44,4 +45,6 @@
     <string name="operators">Operators</string>
     <string name="go">Go</string>
     <string name="types">Types</string>
+    <string name="type">Type</string>
+    <string name="section_glance" />
 </resources>

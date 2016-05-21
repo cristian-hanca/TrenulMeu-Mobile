@@ -22,6 +22,7 @@ import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.filters.models.CheckItem;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
+import ro.trenulmeu.mobile.managedrecyclerview.adapter.RecyclerViewClickListener;
 import ro.trenulmeu.mobile.models.Train;
 import ro.trenulmeu.mobile.models.TrainOperator;
 
@@ -54,6 +55,18 @@ public class TrainsFragment extends Fragment {
         search = (SearchView) view.findViewById(R.id.search);
 
         adapter = new TrainsAdapter(AppContext.trainFilter.getFiltered());
+        adapter.setItemClickListener(new RecyclerViewClickListener() {
+            @Override
+            public void itemClicked(View v, int position) {
+                AppContext.selectedTrain = adapter.getItem(position);
+                AppContext.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentHelpers.goToSingleton(new DetailsFragment(), Constants.gotoDetails);
+                    }
+                });
+            }
+        });
         list.setAdapter(adapter);
 
         view.findViewById(R.id.filter).setOnClickListener(new View.OnClickListener() {

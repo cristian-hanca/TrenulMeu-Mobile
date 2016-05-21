@@ -31,6 +31,10 @@ public abstract class FilterableRecyclerViewAdapter<T, VH
         return dataSet.size();
     }
 
+    public T getItem(int position) {
+        return dataSet.get(position);
+    }
+
     public T removeItem(int position) {
         final T model = dataSet.remove(position);
         notifyItemRemoved(position);
@@ -81,6 +85,7 @@ public abstract class FilterableRecyclerViewAdapter<T, VH
             }
         }
     }
+
 
     public class ClickableViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
