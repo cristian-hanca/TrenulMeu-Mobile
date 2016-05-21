@@ -6,16 +6,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView
-        android:id="@+id/list"
-        android:name="ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingRight="5dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment" />
+        app:cardCornerRadius="4dp"
+        app:elevation="5dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/header">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/title_train_availability"
+                    android:id="@+id/title"
+                    android:layout_weight="1"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/toggle"
+                    android:src="@drawable/expand"
+                    android:contentDescription="@string/toggle" />
+            </LinearLayout>
+
+            <ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView
+                android:id="@+id/content"
+                android:name="ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
