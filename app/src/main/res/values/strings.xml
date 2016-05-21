@@ -30,6 +30,14 @@
     <string name="menu_stations">Stations</string>
     <string name="menu_status">Status</string>
 
+    <string name="service_c1">First</string>
+    <string name="service_c2">Economy</string>
+    <string name="service_d1">Sleeper</string>
+    <string name="service_d6">6-Berth</string>
+    <string name="service_d4">4-Berth</string>
+    <string name="service_b">Bar</string>
+    <string name="service_r">Restaurant</string>
+
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
     <string name="day_wednesday">Wednesday</string>

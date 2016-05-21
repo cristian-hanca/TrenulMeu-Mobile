@@ -32,7 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/placeholder"
+                    android:text="@string/title_train_glance"
                     android:id="@+id/title"
                     android:layout_weight="1"
                     android:layout_gravity="center" />

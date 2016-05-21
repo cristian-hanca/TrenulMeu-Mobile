@@ -14,6 +14,7 @@ import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainGlanceFragment;
+import ro.trenulmeu.mobile.fragments.details.TrainServiceFragment;
 import ro.trenulmeu.mobile.models.Train;
 
 public class DetailsFragment extends Fragment {
@@ -40,6 +41,9 @@ public class DetailsFragment extends Fragment {
         if (savedInstanceState == null) {
             TrainGlanceFragment glance = TrainGlanceFragment.newInstance(true);
             addFragment(R.id.details_glance, glanceTag, glance);
+
+            TrainServiceFragment service = TrainServiceFragment.newInstance(true);
+            addFragment(R.id.details_service, serviceTag, service);
 
             TrainAvailabilityFragment availability = TrainAvailabilityFragment.newInstance(true);
             addFragment(R.id.details_availability, availabilityTag, availability);
