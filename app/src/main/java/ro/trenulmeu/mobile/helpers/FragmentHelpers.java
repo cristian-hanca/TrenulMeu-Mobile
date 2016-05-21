@@ -35,6 +35,13 @@ public class FragmentHelpers {
     }
 
     /**
+     * Return the number of Items in the Back Stack.
+     */
+    public static int backCount() {
+        return getFM().getBackStackEntryCount();
+    }
+
+    /**
      * Goto the specified Fragment using the given Tag.
      */
     public static <T extends Fragment> void goTo(T fragment, String tag) {

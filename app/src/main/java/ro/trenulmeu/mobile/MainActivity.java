@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment, new SplashFragment(), Constants.gotoSplash);
+            ft.addToBackStack(Constants.gotoSplash);
             ft.commit();
         }
     }
@@ -64,8 +65,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        if (AppContext.db == null) {
+            exit();
+        }
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (FragmentHelpers.backCount() == 1) {
+            exit();
         } else {
             super.onBackPressed();
         }
