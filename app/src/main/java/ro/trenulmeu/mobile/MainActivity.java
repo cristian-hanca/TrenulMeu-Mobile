@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +70,27 @@ public class MainActivity extends AppCompatActivity
             ft.add(R.id.fragment, new SplashFragment(), Constants.gotoSplash);
             ft.addToBackStack(Constants.gotoSplash);
             ft.commit();
+        }
+    }
+
+    public void lockMode(boolean active) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            if (active) {
+                bar.hide();
+            } else {
+                bar.show();
+            }
+        }
+
+        if (active) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 

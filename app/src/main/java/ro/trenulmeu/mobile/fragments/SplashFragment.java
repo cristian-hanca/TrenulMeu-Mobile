@@ -55,11 +55,7 @@ public class SplashFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
 
-        ActionBar actionBar = AppContext.activity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-
+        AppContext.activity.lockMode(true);
         AppContext.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -320,10 +316,7 @@ public class SplashFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        ActionBar actionBar = AppContext.activity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.show();
-        }
+        AppContext.activity.lockMode(false);
         if (serverStatusFetch != null) {
             serverStatusFetch.setCallbacks(null);
         }
