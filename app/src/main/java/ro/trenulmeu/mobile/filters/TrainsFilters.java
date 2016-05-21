@@ -87,12 +87,14 @@ public class TrainsFilters {
                         .orderAsc(TrainDao.Properties.Id)
                         .list();
             }
+            this.invalidate = false;
         }
 
+        List<Train> result = Lists.newArrayList(filtered);
         if (Strings.isNullOrEmpty(search)) {
-            return filtered;
+            return result;
         }
-        return Stream.of(filtered).filter(new Predicate<Train>() {
+        return Stream.of(result).filter(new Predicate<Train>() {
             @Override
             public boolean test(Train value) {
                 return value.getName().startsWith(search);
