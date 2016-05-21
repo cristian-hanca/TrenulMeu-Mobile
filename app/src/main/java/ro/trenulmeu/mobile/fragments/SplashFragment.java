@@ -55,6 +55,7 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
+
         ActionBar actionBar = AppContext.activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -78,6 +79,10 @@ public class SplashFragment extends Fragment {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if (AppContext.db != null) {
+            return view;
         }
 
         // If it is the first time, we do checks if we have any reason to be in this Fragment.

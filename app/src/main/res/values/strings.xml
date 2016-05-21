@@ -47,4 +47,5 @@
     <string name="types">Types</string>
     <string name="type">Type</string>
     <string name="section_glance" />
+    <string name="toggle">Toggle</string>
 </resources>

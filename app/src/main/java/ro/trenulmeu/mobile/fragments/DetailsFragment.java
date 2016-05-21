@@ -16,6 +16,7 @@ import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.TrainsAdapter;
+import ro.trenulmeu.mobile.controls.ExpandFragment;
 import ro.trenulmeu.mobile.dialogs.TrainsFilterDialog;
 import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
@@ -40,10 +41,12 @@ public class DetailsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.train_type_name)).setText(train.getTrainType().getLongName());
         ((TextView) view.findViewById(R.id.train_name)).setText(train.getName());
 
+        ExpandFragment ef = (ExpandFragment) view.findViewById(R.id.ef);
+        ef.setTitle(R.string.placeholder_station_long);
+        ef.setFragment(new SplashFragment(), "");
+
         return view;
     }
-
-
 
     @Override
     public void onAttach(Context context) {

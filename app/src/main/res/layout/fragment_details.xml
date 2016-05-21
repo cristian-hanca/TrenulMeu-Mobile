@@ -59,17 +59,10 @@
             android:layout_height="match_parent"
             android:columnCount="1">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <ro.trenulmeu.mobile.controls.ExpandFragment
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/section_glance" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:id="@+id/ef" />
         </GridLayout>
 
     </android.support.v4.widget.NestedScrollView>
