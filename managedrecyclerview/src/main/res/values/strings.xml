@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Managed RecyclerView</string>
+    <string name="empty_list">Empty List</string>
+</resources>
