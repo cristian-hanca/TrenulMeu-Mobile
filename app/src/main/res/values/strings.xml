@@ -31,4 +31,5 @@
     <string name="hint_train">Train Number</string>
     <string name="filter">Filter</string>
     <string name="divider">Divider</string>
+    <string name="filter_operators">Select Operators</string>
 </resources>

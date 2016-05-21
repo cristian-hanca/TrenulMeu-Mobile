@@ -45,7 +45,7 @@
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
     </LinearLayout>
-    
+
     <ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView
         android:id="@+id/list"
         android:name="com.trenulmeu.mobile.fragments.TrainsFragment"
