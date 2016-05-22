@@ -16,6 +16,7 @@
     <string name="title_train_service">Onboard Services</string>
     <string name="title_train_path">Train Path</string>
     <string name="title_train_availability">Train Availability</string>
+    <string name="title_train_alarm">Set Train Alarm</string>
 
     <string name="error_database_open">Error opening the Database! Please restart the application in order to re-download the database.</string>
     <string name="error_database_expired">Database is Expired, thus information may not be accurate and some features may not work. Please check periodically for updates.</string>
@@ -112,4 +113,7 @@
     <string name="time_blank">--.--</string>
     <string name="change">Change</string>
     <string name="flip">Flip</string>
+    <string name="alarm_msg">Train %1$s arrives at %2$s in %3$s minutes.</string>
+    <string name="alarm_msg_1">Announce me when the train will arrive in</string>
+    <string name="set">Set</string>
 </resources>

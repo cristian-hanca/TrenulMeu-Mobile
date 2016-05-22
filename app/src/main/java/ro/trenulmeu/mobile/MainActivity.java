@@ -1,6 +1,9 @@
 package ro.trenulmeu.mobile;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +20,7 @@ import ro.trenulmeu.mobile.fragments.StationsFragment;
 import ro.trenulmeu.mobile.fragments.TrainsFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.helpers.MenuHandler;
+import ro.trenulmeu.mobile.timespan.TimeSpan;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -130,6 +134,18 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         return menuHandler.handle(item);
+    }
+
+    public void setAlarm(String train, String station, int diff, TimeSpan time) {
+        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            i.putExtra(AlarmClock.EXTRA_VIBRATE, true);
+        }
+        i.putExtra(AlarmClock.EXTRA_MESSAGE, AppContext.activity.getString(R.string.alarm_msg,
+                train, station, diff));
+        i.putExtra(AlarmClock.EXTRA_HOUR, time.getCount(TimeSpan.TimeUnits.HOUR));
+        i.putExtra(AlarmClock.EXTRA_MINUTES, time.getCount(TimeSpan.TimeUnits.MINUTE));
+        startActivity(i);
     }
 
 }

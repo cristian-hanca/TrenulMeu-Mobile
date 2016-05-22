@@ -42,6 +42,7 @@ import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.models.Station;
 import ro.trenulmeu.mobile.models.TrainPath;
 import ro.trenulmeu.mobile.models.TrainPathDao;
+import ro.trenulmeu.mobile.timespan.TimeSpan;
 
 public class RoutesFragment extends Fragment {
 
@@ -80,7 +81,7 @@ public class RoutesFragment extends Fragment {
         adapter = new PlatformAdapter(new ArrayList<TrainPath>());
         list.setAdapter(adapter);
 
-        StationsAutoCompleteAdapter a1 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll());
+        StationsAutoCompleteAdapter a1 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll(), android.R.layout.simple_dropdown_item_1line);
         autoFrom.setAdapter(a1);
         autoFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,7 +91,7 @@ public class RoutesFragment extends Fragment {
             }
         });
 
-        StationsAutoCompleteAdapter a2 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll());
+        StationsAutoCompleteAdapter a2 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll(), android.R.layout.simple_dropdown_item_1line);
         autoTo.setAdapter(a2);
         autoTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,6 +125,13 @@ public class RoutesFragment extends Fragment {
                 content.fromId = content.toId;
                 content.toId = tmp;
                 UpdateUI();
+            }
+        });
+
+        view.findViewById(R.id.route_go).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

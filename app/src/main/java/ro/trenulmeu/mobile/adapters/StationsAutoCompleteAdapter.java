@@ -1,5 +1,6 @@
 package ro.trenulmeu.mobile.adapters;
 
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,16 @@ import ro.trenulmeu.mobile.models.Station;
 
 public class StationsAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
+    private @LayoutRes int layoutId;
     private List<Station> dataSet = new ArrayList<>();
     private List<Station> filterSet = new ArrayList<>();
 
     private StationFilter filter;
 
-    public StationsAutoCompleteAdapter(List<Station> dataSet) {
+    public StationsAutoCompleteAdapter(List<Station> dataSet, @LayoutRes int layoutId) {
         this.dataSet = dataSet;
         this.filterSet = dataSet;
+        this.layoutId = layoutId;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class StationsAutoCompleteAdapter extends BaseAdapter implements Filterab
         ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = AppContext.activity.getLayoutInflater();
-            convertView = inflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+            convertView = inflater.inflate(layoutId, parent, false);
 
             holder = new ViewHolder();
             holder.view = (TextView) convertView.findViewById(android.R.id.text1);

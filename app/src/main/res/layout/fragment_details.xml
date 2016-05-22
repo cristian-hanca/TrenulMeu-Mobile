@@ -85,6 +85,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/details_availability"
                 android:orientation="horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_alarm"
+                android:orientation="horizontal" />
         </GridLayout>
 
     </android.support.v4.widget.NestedScrollView>

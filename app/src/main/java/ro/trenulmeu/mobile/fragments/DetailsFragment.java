@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
+import ro.trenulmeu.mobile.fragments.details.TrainAlarmFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainGlanceFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
@@ -24,6 +25,7 @@ public class DetailsFragment extends Fragment {
     private static final String serviceTag = "serviceTag";
     private static final String pathTag = "pathTag";
     private static final String availabilityTag = "availabilityTag";
+    private static final String alarmTag = "alarmTag";
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -61,6 +63,12 @@ public class DetailsFragment extends Fragment {
         if (availability == null) {
             availability = TrainAvailabilityFragment.newInstance(true);
             addFragment(R.id.details_availability, availabilityTag, availability);
+        }
+
+        TrainAlarmFragment alarm = findFragment(alarmTag, TrainAlarmFragment.class);
+        if (alarm == null) {
+            alarm = TrainAlarmFragment.newInstance(true);
+            addFragment(R.id.details_alarm, alarmTag, alarm);
         }
 
         return view;
