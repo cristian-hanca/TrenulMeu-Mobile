@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/search"
             android:layout_weight="1"
-            android:queryHint="@string/hint_train"
-            android:iconifiedByDefault="false"
+            app:queryHint="@string/hint_station"
+            app:iconifiedByDefault="false"
             android:focusableInTouchMode="true"/>
 
     </LinearLayout>

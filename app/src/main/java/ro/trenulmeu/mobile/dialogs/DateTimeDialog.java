@@ -51,7 +51,7 @@ public class DateTimeDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                callbacks.onDone();
+                callbacks.onDone(dateTime);
             }
         });
 
@@ -167,7 +167,7 @@ public class DateTimeDialog extends DialogFragment {
     }
 
     public interface Callbacks {
-        void onDone();
+        void onDone(DateTime dateTime);
     }
 
 }

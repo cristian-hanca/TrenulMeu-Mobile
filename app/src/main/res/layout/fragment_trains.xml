@@ -20,8 +20,8 @@
             android:id="@+id/search"
             android:layout_weight="1"
             android:inputType="number"
-            android:queryHint="@string/hint_train"
-            android:iconifiedByDefault="false"
+            app:queryHint="@string/hint_train"
+            app:iconifiedByDefault="false"
             android:focusableInTouchMode="true"/>
 
         <LinearLayout
