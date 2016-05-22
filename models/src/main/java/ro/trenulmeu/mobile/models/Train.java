@@ -461,6 +461,15 @@ public class Train {
     public boolean runsOnDate(Date date) {
         for (TrainAvailability a : getAvailability()) {
             if (a.runsOnDate(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean runsOnDateTime(Date date) {
+        for (TrainAvailability a : getAvailability()) {
+            if (a.runsOnDate(date)) {
                 short now = (short) new DateTime(date).getMinuteOfDay();
                 short from = getFromTime().getTicks();
                 short to = getToTime().getTicks();

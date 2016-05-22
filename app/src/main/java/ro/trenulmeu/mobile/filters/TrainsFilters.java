@@ -76,7 +76,7 @@ public class TrainsFilters {
                         .filter(new Predicate<Train>() {
                             @Override
                             public boolean test(Train value) {
-                                return value.runsOnDate(new Date());
+                                return value.runsOnDateTime(new Date());
                             }
                         })
                         .collect(Collectors.<Train>toList());
