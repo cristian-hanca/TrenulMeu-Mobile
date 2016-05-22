@@ -35,7 +35,7 @@
     <string name="service_d1">Sleeper</string>
     <string name="service_d6">6-Berth</string>
     <string name="service_d4">4-Berth</string>
-    <string name="service_b">Bar</string>
+    <string name="service_b">Bistro</string>
     <string name="service_r">Restaurant</string>
 
     <string name="day_monday">Monday</string>
@@ -80,4 +80,11 @@
     <string name="title_train_path">Train Path</string>
     <string name="title_train_availability">Train Availability</string>
     <string name="dates">Dates</string>
+    <string name="km">KM</string>
+    <string name="time_in">Arr.</string>
+    <string name="time_out">Dep.</string>
+    <string name="station">Station</string>
+    <string name="placeholder_km">999.99</string>
+    <string name="position">Pos.</string>
+    <string name="filter_path">Display only Stops</string>
 </resources>

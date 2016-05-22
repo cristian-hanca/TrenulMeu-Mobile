@@ -14,6 +14,7 @@ import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainGlanceFragment;
+import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainServiceFragment;
 import ro.trenulmeu.mobile.models.Train;
 
@@ -44,6 +45,9 @@ public class DetailsFragment extends Fragment {
 
             TrainServiceFragment service = TrainServiceFragment.newInstance(true);
             addFragment(R.id.details_service, serviceTag, service);
+
+            TrainPathFragment path = TrainPathFragment.newInstance(true, true);
+            addFragment(R.id.details_path, pathTag, path);
 
             TrainAvailabilityFragment availability = TrainAvailabilityFragment.newInstance(true);
             addFragment(R.id.details_availability, availabilityTag, availability);

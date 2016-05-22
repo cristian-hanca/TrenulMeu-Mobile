@@ -26,4 +26,5 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
     compile project(path: ':timespan')
     compile 'joda-time:joda-time:2.9.2'
+    compile 'com.annimon:stream:1.0.9'
 }

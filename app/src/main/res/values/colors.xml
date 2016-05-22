@@ -8,6 +8,7 @@
     <color name="background_nav">#FAFAFA</color>
     <color name="red">#FF0000</color>
     <color name="text">#212121</color>
+    <color name="text_muted">#9E9E9E</color>
     <color name="divider">#BDBDBD</color>
 
     <color name="white">#FFFFFF</color>
