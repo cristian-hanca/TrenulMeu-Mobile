@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.common.collect.Lists;
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class PathAdapter extends
     private DecimalFormat df = new DecimalFormat("#.0");
 
     public PathAdapter(List<TrainPath> dataSet) {
-        super(dataSet);
+        super(Lists.newArrayList(dataSet));
     }
 
     @Override

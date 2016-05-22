@@ -1,12 +1,16 @@
 package ro.trenulmeu.mobile.fragments.details;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -39,6 +43,7 @@ public class TrainPathFragment extends Fragment {
     private ImageView toggle;
     private ManagedRecyclerView list;
     private PathAdapter adapter;
+    private Train train;
 
     public static TrainPathFragment newInstance(boolean visible, boolean onlyStops) {
         TrainPathFragment fragment = new TrainPathFragment();
@@ -52,7 +57,8 @@ public class TrainPathFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        Train train = AppContext.selectedTrain;
+        train = AppContext.selectedTrain;
+
         visible = savedInstanceState == null
                 || savedInstanceState.getBoolean(visibleArgKey, true);
         onlyStops = savedInstanceState == null
@@ -70,16 +76,6 @@ public class TrainPathFragment extends Fragment {
                 updateList();
             }
         });
-
-        if (adapter == null) {
-            adapter = new PathAdapter(onlyStops
-                    ? Lists.newArrayList(train.getSortedStops())
-                    : Lists.newArrayList(train.getSortedPath()));
-        }
-
-        list.getListView().setNestedScrollingEnabled(false);
-        list.setAdapter(adapter);
-
         view.findViewById(R.id.header).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +83,25 @@ public class TrainPathFragment extends Fragment {
                 updateUi();
             }
         });
+
+        /**
+         * Look at this hacky thing!
+         * It does the expensive task of loading the Paths in a different thread, after 0.5s.
+         * The aim is to wait for the Transition to end before launching this hard task.
+         */
+        final AsyncTask<Void, Void, Void> loadTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                initList();
+                return null;
+            }
+        }.execute();
 
         updateUi();
         return view;
@@ -99,10 +114,26 @@ public class TrainPathFragment extends Fragment {
 
     private void updateList() {
         final List<TrainPath> filteredModelList = onlyStops
-                ? Lists.newArrayList(AppContext.selectedTrain.getSortedStops())
-                : Lists.newArrayList(AppContext.selectedTrain.getSortedPath());
+                ? AppContext.selectedTrain.getSortedStops()
+                : AppContext.selectedTrain.getSortedPath();
         adapter.animateTo(filteredModelList);
         list.getListView().scrollToPosition(0);
+    }
+
+    private void initList() {
+        if (adapter == null) {
+            adapter = new PathAdapter(onlyStops
+                    ? train.getSortedStops()
+                    : train.getSortedPath());
+        }
+
+        AppContext.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                list.getListView().setNestedScrollingEnabled(false);
+                list.setAdapter(adapter);
+            }
+        });
     }
 
     @Override
@@ -129,7 +160,7 @@ public class TrainPathFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        if (!getActivity().isChangingConfigurations()) {
+        if (!AppContext.activity.isChangingConfigurations()) {
             AppContext.cache.delete(pathAdapter_key);
         }
     }
