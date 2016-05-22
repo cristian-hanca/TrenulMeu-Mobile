@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckedTextView;
@@ -28,10 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import lombok.Data;
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.PlatformAdapter;
+import ro.trenulmeu.mobile.adapters.StationsAutoCompleteAdapter;
 import ro.trenulmeu.mobile.dialogs.DateTimeDialog;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.helpers.StringHelpers;
@@ -42,82 +45,121 @@ import ro.trenulmeu.mobile.models.TrainPathDao;
 
 public class RoutesFragment extends Fragment {
 
+    private static final String routesDataKey = "routesDataKey";
 
-    private static final String routesFromKey = "routesFromKey";
-    private static final String routesToKey = "routesToKey";
-    private static final String routesDateTime = "routesDateTime";
+    private Content content;
 
     private ManagedRecyclerView list;
     private PlatformAdapter adapter;
 
-    private DateTime dateTime;
-    private static Map<String, Station> stationMap;
-
     private AutoCompleteTextView autoFrom;
     private AutoCompleteTextView autoTo;
+    private TextView datetimeText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         AppContext.activity.setTitle(R.string.title_routes);
-        if (dateTime == null) {
-            dateTime = DateTime.now();
+        if (content == null) {
+            content = new Content();
+            content.dateTime = new DateTime();
+            content.stationMap = new LinkedHashMap<>();
+            for (Station s : AppContext.db.getStationDao().loadAll()) {
+                content.stationMap.put(s.getId(), s);
+            }
+            content.fromId = -1;
+            content.toId = -1;
         }
 
         final View view = inflater.inflate(R.layout.fragment_routes, container, false);
         list = (ManagedRecyclerView) view.findViewById(R.id.list);
         autoFrom = (AutoCompleteTextView) view.findViewById(R.id.route_from);
         autoTo = (AutoCompleteTextView) view.findViewById(R.id.route_to);
+        datetimeText = (TextView) view.findViewById(R.id.route_date);
 
         adapter = new PlatformAdapter(new ArrayList<TrainPath>());
         list.setAdapter(adapter);
 
-        stationMap = new LinkedHashMap<>();
-        for (Station s : AppContext.db.getStationDao().loadAll()) {
-            stationMap.put(StringHelpers.normalize(s.getName()), s);
-        }
-
-        ArrayAdapter<String> a1 = new ArrayAdapter<>(AppContext.activity,
-                android.R.layout.simple_spinner_dropdown_item,
-                Lists.newArrayList(stationMap.keySet()));
+        StationsAutoCompleteAdapter a1 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll());
         autoFrom.setAdapter(a1);
-        autoFrom.setText("");
+        autoFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                content.fromId = id;
+                UpdateUI();
+            }
+        });
 
-        autoTo.setText("");
+        StationsAutoCompleteAdapter a2 = new StationsAutoCompleteAdapter(AppContext.db.getStationDao().loadAll());
+        autoTo.setAdapter(a2);
+        autoTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                content.toId = id;
+                UpdateUI();
+            }
+        });
 
-        //UpdateUI();
+        final DateTimeDialog dtd = FragmentHelpers.findByTag(Constants.dialogStationsDateTime,
+                DateTimeDialog.class, new DateTimeDialog());
+        dtd.setDateTime(content.dateTime);
+        dtd.setCallbacks(new DateTimeDialog.Callbacks() {
+            @Override
+            public void onDone(DateTime result) {
+                content.dateTime = result;
+                UpdateUI();
+            }
+        });
+        view.findViewById(R.id.route_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dtd.show(AppContext.activity.getSupportFragmentManager(), Constants.dialogTrainFilter);
+            }
+        });
+
+        view.findViewById(R.id.route_flip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long tmp = content.fromId;
+                content.fromId = content.toId;
+                content.toId = tmp;
+                UpdateUI();
+            }
+        });
+
+        UpdateUI();
         //UpdateList();
         return view;
     }
 
     private void UpdateUI() {
-
+        autoFrom.setText(content.fromId == -1 ? "" : content.stationMap.get(content.fromId).getName());
+        autoTo.setText(content.toId == -1 ? "" : content.stationMap.get(content.toId).getName());
+        datetimeText.setText(content.dateTime.toString("dd/MM/yy HH:mm"));
     }
 
     private void UpdateList() {
 
     }
 
-    private void setupAutocomplete() {
-
-    }
-
     @Override
     public void onAttach(Context context) {
-        //isArrive = AppContext.cache.get(platformIsArrive_key, Boolean.class, true);
-        //onlyStop = AppContext.cache.get(platformOnlyStop_key, Boolean.class, true);
-        dateTime = AppContext.cache.get(routesDateTime, DateTime.class, DateTime.now());
-
+        content = AppContext.cache.get(routesDataKey, Content.class);
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
-        //AppContext.cache.set(platformIsArrive_key, isArrive);
-        //AppContext.cache.set(platformOnlyStop_key, onlyStop);
-        AppContext.cache.set(routesDateTime, dateTime);
-
+        AppContext.cache.set(routesDataKey, content);
         super.onDetach();
+    }
+
+    @Data
+    public class Content {
+        private DateTime dateTime;
+        private Map<Long, Station> stationMap;
+        private long fromId;
+        private long toId;
     }
 
 }
