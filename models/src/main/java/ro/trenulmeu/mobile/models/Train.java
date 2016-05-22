@@ -11,6 +11,10 @@ import ro.trenulmeu.mobile.timespan.TimeSpan;
 // KEEP INCLUDES - put your custom includes here
 import org.joda.time.DateTime;
 import java.util.Date;
+
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.Function;
 // KEEP INCLUDES END
 /**
  * Entity mapped to table "Train".
@@ -57,6 +61,9 @@ public class Train {
 
     // KEEP FIELDS - put your custom fields here
     private List<TrainPath> Stop;
+
+    private List<TrainPath> SortedPath;
+    private List<TrainPath> SortedStop;
     // KEEP FIELDS END
 
     public Train() {
@@ -409,6 +416,46 @@ public class Train {
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetStops() {
         Stop = null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<TrainPath> getSortedPath() {
+        if (SortedPath == null) {
+            List<TrainPath> newList = (List<TrainPath>) Stream.of(getPath())
+                    .sortBy(new Function<TrainPath, Comparable>() {
+                        @Override
+                        public Comparable apply(TrainPath value) {
+                            return value.getKm();
+                        }
+                    })
+                    .collect(Collectors.<TrainPath>toList());
+            synchronized (this) {
+                if(SortedPath == null) {
+                    SortedPath = newList;
+                }
+            }
+        }
+        return SortedPath;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<TrainPath> getSortedStops() {
+        if (SortedStop == null) {
+            List<TrainPath> newList = (List<TrainPath>) Stream.of(getStops())
+                    .sortBy(new Function<TrainPath, Comparable>() {
+                        @Override
+                        public Comparable apply(TrainPath value) {
+                            return value.getKm();
+                        }
+                    })
+                    .collect(Collectors.<TrainPath>toList());
+            synchronized (this) {
+                if(SortedStop == null) {
+                    SortedStop = newList;
+                }
+            }
+        }
+        return SortedStop;
     }
 
     public boolean runsOnDate(Date date) {
