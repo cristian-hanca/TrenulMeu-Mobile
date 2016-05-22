@@ -53,6 +53,15 @@
     <string name="day_short_saturday">S</string>
     <string name="day_short_sunday">S</string>
 
+    <string name="datetime"><![CDATA[Date & Time]]></string>
+    <string name="datetime_now">Now</string>
+    <string name="datetime_p15m">+ 15 Min</string>
+    <string name="datetime_p1h">+ 1 Hour</string>
+    <string name="datetime_p1d">+ 1 Day</string>
+    <string name="datetime_m15m">- 15 Min</string>
+    <string name="datetime_m1h">- 1 Hour</string>
+    <string name="datetime_m1d">- 1 Day</string>
+
     <string name="filter_train_now">Display only Trains running now</string>
 
     <string name="logo">Logo</string>
@@ -87,4 +96,7 @@
     <string name="placeholder_km">999.99</string>
     <string name="position">Pos.</string>
     <string name="filter_path">Display only Stops</string>
+    <string name="departures">Depart</string>
+    <string name="arrivals">Arrive</string>
+    <string name="date">Date</string>
 </resources>

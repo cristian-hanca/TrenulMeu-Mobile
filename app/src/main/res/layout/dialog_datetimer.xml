@@ -15,14 +15,14 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/filter"
             android:layout_gravity="center"
-            android:src="@drawable/filter"
+            android:src="@drawable/datetime"
             android:layout_marginRight="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/filter"
+            android:text="@string/datetime"
             android:layout_gravity="center" />
     </LinearLayout>
 
@@ -43,7 +43,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/filter_train_operators"
+                android:id="@+id/datetime_date"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp">
 
@@ -51,15 +51,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/operators"
+                    android:text="@string/date"
                     android:gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/placeholder_selection"
-                    android:id="@+id/filter_train_operators_count"
+                    android:text="@string/placeholder_date"
+                    android:id="@+id/datetime_date_text"
                     android:gravity="center_vertical|end"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp" />
@@ -76,7 +76,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/filter_train_types"
+                android:id="@+id/datetime_time"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp">
 
@@ -84,15 +84,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/types"
+                    android:text="@string/time"
                     android:gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/placeholder_selection"
-                    android:id="@+id/filter_train_types_count"
+                    android:text="@string/placeholder_time"
+                    android:id="@+id/datetime_time_text"
                     android:gravity="center_vertical|end"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" />
@@ -107,14 +107,96 @@
             </TableRow>
         </TableLayout>
 
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_train_now"
-            android:id="@+id/filter_train_now"
-            android:switchPadding="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_marginTop="5dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_m1d"
+                android:id="@+id/datetime_m1d"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_m1h"
+                android:id="@+id/datetime_m1h"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_m15m"
+                android:id="@+id/datetime_m15m"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_now"
+                android:id="@+id/datetime_now"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_p15m"
+                android:id="@+id/datetime_p15m"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_p1h"
+                android:id="@+id/datetime_p1h"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/datetime_p1d"
+                android:id="@+id/datetime_p1d"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
