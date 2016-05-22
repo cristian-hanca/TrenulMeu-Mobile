@@ -1,8 +1,10 @@
 package ro.trenulmeu.mobile;
 
+import ro.trenulmeu.mobile.filters.StationsFilters;
 import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.DataCache;
 import ro.trenulmeu.mobile.models.DaoSession;
+import ro.trenulmeu.mobile.models.Station;
 import ro.trenulmeu.mobile.models.Train;
 
 /**
@@ -27,9 +29,19 @@ public class AppContext {
     public static Train selectedTrain;
 
     /**
+     * Selected Station to be viewed.
+     */
+    public static Station selectedStation;
+
+    /**
      * Train Filter to be used in the TrainsFragment.
      */
     public static TrainsFilters trainFilter = null;
+
+    /**
+     * Station Filter to be used in the StationsFragment.
+     */
+    public static StationsFilters stationFilter = null;
 
     /**
      * Data Cache Singleton.

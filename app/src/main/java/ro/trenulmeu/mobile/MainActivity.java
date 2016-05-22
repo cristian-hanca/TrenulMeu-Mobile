@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import ro.trenulmeu.mobile.fragments.SplashFragment;
+import ro.trenulmeu.mobile.fragments.StationsFragment;
 import ro.trenulmeu.mobile.fragments.TrainsFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.helpers.MenuHandler;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onStations() {
-
+                FragmentHelpers.goToSingleton(new StationsFragment(), Constants.gotoStations);
             }
 
             @Override

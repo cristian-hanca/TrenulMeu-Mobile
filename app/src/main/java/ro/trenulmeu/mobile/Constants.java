@@ -11,10 +11,13 @@ public class Constants {
     public static final String gotoSplash = "gotoSplash";
     public static final String gotoTrains = "gotoTrains";
     public static final String gotoDetails = "gotoDetails";
+    public static final String gotoStations = "gotoStations";
+    public static final String gotoStation = "gotoStation";
 
     public static final String dialogTrainFilter = "dialogTrainFilter";
     public static final String dialogTrainFilterOperators = "dialogTrainFilterOperators";
     public static final String dialogTrainFilterTypes = "dialogTrainFilterTypes";
+    public static final String dialogStationsDateTime = "dialogStationsDateTime";
 
     public static final String serverStatus_key = "serverStatus_key";
 
