@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import ro.trenulmeu.mobile.fragments.RoutesFragment;
 import ro.trenulmeu.mobile.fragments.SplashFragment;
 import ro.trenulmeu.mobile.fragments.StationsFragment;
 import ro.trenulmeu.mobile.fragments.TrainsFragment;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         menuHandler = new MenuHandler(navigationView.getMenu(), new MenuHandler.Actions() {
             @Override
             public void onRoutes() {
-
+                FragmentHelpers.goToSingleton(new RoutesFragment(), Constants.gotoRoutes);
             }
 
             @Override
@@ -100,8 +101,7 @@ public class MainActivity extends AppCompatActivity
         if (AppContext.db == null) {
             exit();
         } else {
-            FragmentHelpers.goToSingleton(new TrainsFragment(), Constants.gotoTrains);
-            menuHandler.getMenu().getItem(1).setChecked(true);
+            FragmentHelpers.goToSingleton(new RoutesFragment(), Constants.gotoRoutes);
         }
     }
 

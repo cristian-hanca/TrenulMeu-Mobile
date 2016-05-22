@@ -1,20 +1,16 @@
 package ro.trenulmeu.mobile.filters;
 
-import android.support.v7.app.AlertDialog;
-
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
 
 import ro.trenulmeu.mobile.AppContext;
+import ro.trenulmeu.mobile.helpers.StringHelpers;
 import ro.trenulmeu.mobile.models.Station;
-import ro.trenulmeu.mobile.models.StationDao;
 
 /**
  * Managed Filter for the Trains view.
@@ -39,7 +35,7 @@ public class StationsFilters {
 
         ImmutableMap.Builder<Long, String> builder = ImmutableMap.builder();
         for (Station s : this.original) {
-            builder.put(s.getId(), removeChr(s.getName()));
+            builder.put(s.getId(), StringHelpers.normalize(s.getName()));
         }
         namesMap = builder.build();
     }
@@ -53,7 +49,7 @@ public class StationsFilters {
 
     public List<Station> getFiltered() {
         if (invalidate) {
-            final String searchTerm = removeChr(search);
+            final String searchTerm = StringHelpers.normalize(search);
             filtered = Stream.of(original).filter(new Predicate<Station>() {
                 @Override
                 public boolean test(Station value) {
@@ -62,17 +58,6 @@ public class StationsFilters {
             }).collect(Collectors.<Station>toList());
         }
         return filtered;
-    }
-
-    private String removeChr(String str) {
-        return str.toLowerCase()
-                .replaceAll(".+ăâá", "a")
-                .replaceAll("é", "e")
-                .replaceAll(".+îí", "i")
-                .replaceAll("ş", "s")
-                .replaceAll(".+öóő", "o")
-                .replaceAll(".+üúű", "u")
-                .replaceAll("ţ", "t");
     }
 
     public String getSearch() {

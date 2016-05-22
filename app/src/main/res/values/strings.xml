@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrenulMeu Mobile</string>
+    <string name="app_name">TrenulMeu <b>Mobile</b></string>
     <string name="app_slogan">The first real Romanian Rail App.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -11,6 +11,7 @@
     <string name="title_details">Train Details</string>
     <string name="title_station">Station</string>
     <string name="title_platform">Platform</string>
+    <string name="title_routes">From A to B…</string>
     <string name="title_train_glance">At A Glance</string>
     <string name="title_train_service">Onboard Services</string>
     <string name="title_train_path">Train Path</string>
@@ -30,6 +31,7 @@
     <string name="placeholder_time">00:00</string>
     <string name="placeholder_time_days">+1</string>
     <string name="placeholder_date">30/12/16</string>
+    <string name="placeholder_datetime">30/12/16 29:59</string>
     <string name="placeholder_km">999.99</string>
 
     <string name="menu_routes">Routes</string>
@@ -108,4 +110,6 @@
     <string name="arrivals_min">Arr.</string>
     <string name="departures_min">Dep.</string>
     <string name="time_blank">--.--</string>
+    <string name="change">Change</string>
+    <string name="flip">Flip</string>
 </resources>
