@@ -15,7 +15,6 @@ import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.StationsAdapter;
 import ro.trenulmeu.mobile.filters.StationsFilters;
-import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.RecyclerViewClickListener;
@@ -49,7 +48,7 @@ public class StationsFragment extends Fragment {
                 AppContext.activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //FragmentHelpers.goToSingleton(new DetailsFragment(), Constants.gotoDetails);
+                        FragmentHelpers.goToSingleton(new PlatformFragment(), Constants.gotoPlatform);
                     }
                 });
             }

@@ -58,6 +58,11 @@ public abstract class FilterableRecyclerViewAdapter<T, VH
         applyAndAnimateMovedItems(models);
     }
 
+    public void replaceDataSet(List<T> models) {
+        this.dataSet = models;
+        notifyDataSetChanged();
+    }
+
     private void applyAndAnimateRemovals(List<T> newModels) {
         for (int i = dataSet.size() - 1; i >= 0; i--) {
             final T model = dataSet.get(i);

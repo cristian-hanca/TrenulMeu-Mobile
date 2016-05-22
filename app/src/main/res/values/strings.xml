@@ -9,6 +9,12 @@
 
     <string name="title_trains">Trains</string>
     <string name="title_details">Train Details</string>
+    <string name="title_station">Station</string>
+    <string name="title_platform">Platform</string>
+    <string name="title_train_glance">At A Glance</string>
+    <string name="title_train_service">Onboard Services</string>
+    <string name="title_train_path">Train Path</string>
+    <string name="title_train_availability">Train Availability</string>
 
     <string name="error_database_open">Error opening the Database! Please restart the application in order to re-download the database.</string>
     <string name="error_database_expired">Database is Expired, thus information may not be accurate and some features may not work. Please check periodically for updates.</string>
@@ -24,11 +30,15 @@
     <string name="placeholder_time">00:00</string>
     <string name="placeholder_time_days">+1</string>
     <string name="placeholder_date">30/12/16</string>
+    <string name="placeholder_km">999.99</string>
 
     <string name="menu_routes">Routes</string>
     <string name="menu_trains">Trains</string>
     <string name="menu_stations">Stations</string>
     <string name="menu_status">Status</string>
+
+    <string name="hint_train">Train Number</string>
+    <string name="hint_station">Station Name</string>
 
     <string name="service_c1">First</string>
     <string name="service_c2">Economy</string>
@@ -55,14 +65,16 @@
 
     <string name="datetime"><![CDATA[Date & Time]]></string>
     <string name="datetime_now">Now</string>
-    <string name="datetime_p15m">+ 15 Min</string>
-    <string name="datetime_p1h">+ 1 Hour</string>
-    <string name="datetime_p1d">+ 1 Day</string>
-    <string name="datetime_m15m">- 15 Min</string>
-    <string name="datetime_m1h">- 1 Hour</string>
-    <string name="datetime_m1d">- 1 Day</string>
+    <string name="datetime_p15m">+15 Min</string>
+    <string name="datetime_p1h">+1 Hour</string>
+    <string name="datetime_p1d">+1 Day</string>
+    <string name="datetime_m15m">-15 Min</string>
+    <string name="datetime_m1h">-1 Hour</string>
+    <string name="datetime_m1d">-1 Day</string>
 
     <string name="filter_train_now">Display only Trains running now</string>
+    <string name="filter_path">Display only Stops</string>
+    <string name="filter_platform_stops">Only Stops</string>
 
     <string name="logo">Logo</string>
     <string name="loading">Loading</string>
@@ -71,7 +83,6 @@
     <string name="ok">OK</string>
     <string name="exit">Exit</string>
     <string name="downloading_database">Downloading new Database</string>
-    <string name="hint_train">Train Number</string>
     <string name="filter">Filter</string>
     <string name="divider">Divider</string>
     <string name="filter_operators">Select Operators</string>
@@ -84,20 +95,17 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="time">Time</string>
-    <string name="title_train_glance">At A Glance</string>
-    <string name="title_train_service">Onboard Services</string>
-    <string name="title_train_path">Train Path</string>
-    <string name="title_train_availability">Train Availability</string>
     <string name="dates">Dates</string>
     <string name="km">KM</string>
     <string name="time_in">Arr.</string>
     <string name="time_out">Dep.</string>
     <string name="station">Station</string>
-    <string name="placeholder_km">999.99</string>
     <string name="position">Pos.</string>
-    <string name="filter_path">Display only Stops</string>
-    <string name="departures">Depart</string>
-    <string name="arrivals">Arrive</string>
+    <string name="departures">Departures</string>
+    <string name="arrivals">Arrivals</string>
     <string name="date">Date</string>
-    <string name="title_station">Station</string>
+    <string name="name">Name</string>
+    <string name="arrivals_min">Arr.</string>
+    <string name="departures_min">Dep.</string>
+    <string name="time_blank">--.--</string>
 </resources>

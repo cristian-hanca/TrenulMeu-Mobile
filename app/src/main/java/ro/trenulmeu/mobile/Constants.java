@@ -12,7 +12,7 @@ public class Constants {
     public static final String gotoTrains = "gotoTrains";
     public static final String gotoDetails = "gotoDetails";
     public static final String gotoStations = "gotoStations";
-    public static final String gotoStation = "gotoStation";
+    public static final String gotoPlatform = "gotoPlatform";
 
     public static final String dialogTrainFilter = "dialogTrainFilter";
     public static final String dialogTrainFilterOperators = "dialogTrainFilterOperators";
