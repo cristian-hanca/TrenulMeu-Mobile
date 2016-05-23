@@ -16,6 +16,7 @@ import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.TrainsAdapter;
 import ro.trenulmeu.mobile.dialogs.TrainsFilterDialog;
 import ro.trenulmeu.mobile.filters.TrainsFilters;
+import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.RecyclerViewClickListener;
@@ -54,6 +55,7 @@ public class TrainsFragment extends Fragment {
             @Override
             public void itemClicked(View v, int position) {
                 AppContext.selectedTrain = adapter.getItem(position);
+                AppContext.cache.delete(TrainPathFragment.pathAdapter_key);
                 AppContext.activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

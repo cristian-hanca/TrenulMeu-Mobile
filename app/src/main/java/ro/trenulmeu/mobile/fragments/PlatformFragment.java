@@ -28,6 +28,7 @@ import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.PlatformAdapter;
 import ro.trenulmeu.mobile.adapters.StationsAdapter;
 import ro.trenulmeu.mobile.dialogs.DateTimeDialog;
+import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.RecyclerViewClickListener;
@@ -119,6 +120,19 @@ public class PlatformFragment extends Fragment {
         });
 
         adapter = new PlatformAdapter(new ArrayList<TrainPath>());
+        adapter.setItemClickListener(new RecyclerViewClickListener() {
+            @Override
+            public void itemClicked(View v, int position) {
+                AppContext.selectedTrain = adapter.getItem(position).getTrain();
+                AppContext.cache.delete(TrainPathFragment.pathAdapter_key);
+                AppContext.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentHelpers.goToSingleton(new DetailsFragment(), Constants.gotoDetails);
+                    }
+                });
+            }
+        });
         list.setAdapter(adapter);
 
         UpdateUI();

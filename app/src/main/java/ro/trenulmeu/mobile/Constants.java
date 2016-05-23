@@ -21,6 +21,7 @@ public class Constants {
     public static final String dialogStationsDateTime = "dialogStationsDateTime";
 
     public static final String serverStatus_key = "serverStatus_key";
+    public static final String routeOptions_key = "routeOptions_key";
 
     /**
      * Static Class.

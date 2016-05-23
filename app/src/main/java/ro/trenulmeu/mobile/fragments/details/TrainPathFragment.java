@@ -33,8 +33,8 @@ public class TrainPathFragment extends Fragment {
 
     public static final String pathAdapter_key = "pathAdapter_key";
 
-    public static final String visibleArgKey = "visibleArgKey";
-    public static final String modeArgKey = "modeArgKey";
+    private static final String visibleArgKey = "visibleArgKey";
+    private static final String modeArgKey = "modeArgKey";
 
     private View content;
     private boolean visible;

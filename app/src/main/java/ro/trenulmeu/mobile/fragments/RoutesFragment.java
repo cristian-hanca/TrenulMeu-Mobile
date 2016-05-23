@@ -35,10 +35,13 @@ import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.PlatformAdapter;
 import ro.trenulmeu.mobile.adapters.StationsAutoCompleteAdapter;
+import ro.trenulmeu.mobile.api.fetcher.FetchUnit;
+import ro.trenulmeu.mobile.api.models.PathOption;
 import ro.trenulmeu.mobile.dialogs.DateTimeDialog;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
 import ro.trenulmeu.mobile.helpers.StringHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
+import ro.trenulmeu.mobile.models.DataBaseStatus;
 import ro.trenulmeu.mobile.models.Station;
 import ro.trenulmeu.mobile.models.TrainPath;
 import ro.trenulmeu.mobile.models.TrainPathDao;
@@ -46,6 +49,7 @@ import ro.trenulmeu.mobile.timespan.TimeSpan;
 
 public class RoutesFragment extends Fragment {
 
+    private static final String routesFetch_key = "routesFetch_key";
     private static final String routesDataKey = "routesDataKey";
 
     private Content content;
@@ -56,6 +60,10 @@ public class RoutesFragment extends Fragment {
     private AutoCompleteTextView autoFrom;
     private AutoCompleteTextView autoTo;
     private TextView datetimeText;
+
+    private List<PathOption> options;
+    private FetchUnit<List<PathOption>> optionsFetch;
+    private FetchUnit.FetchCallbacks<List<PathOption>> optionsCallbacks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -153,6 +161,7 @@ public class RoutesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         content = AppContext.cache.get(routesDataKey, Content.class);
+        //options = AppContext.cache.get(Constants.routeOptions_key, List.class);
         super.onAttach(context);
     }
 
