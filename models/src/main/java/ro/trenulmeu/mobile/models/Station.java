@@ -13,7 +13,7 @@ public class Station {
     private String Name;
     private Float Lat;
     private Float Lon;
-    private Integer TimeOffset;
+    private Byte TimeOffset;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -25,7 +25,7 @@ public class Station {
         this.id = id;
     }
 
-    public Station(Long id, String Name, Float Lat, Float Lon, Integer TimeOffset) {
+    public Station(Long id, String Name, Float Lat, Float Lon, Byte TimeOffset) {
         this.id = id;
         this.Name = Name;
         this.Lat = Lat;
@@ -65,11 +65,11 @@ public class Station {
         this.Lon = Lon;
     }
 
-    public Integer getTimeOffset() {
+    public Byte getTimeOffset() {
         return TimeOffset;
     }
 
-    public void setTimeOffset(Integer TimeOffset) {
+    public void setTimeOffset(Byte TimeOffset) {
         this.TimeOffset = TimeOffset;
     }
 

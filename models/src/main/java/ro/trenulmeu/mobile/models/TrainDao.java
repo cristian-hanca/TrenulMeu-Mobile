@@ -41,9 +41,11 @@ public class TrainDao extends AbstractDao<Train, Long> {
         public final static Property ToId = new Property(7, Long.class, "ToId", false, "ToId");
         public final static Property FromName = new Property(8, String.class, "FromName", false, "FromName");
         public final static Property ToName = new Property(9, String.class, "ToName", false, "ToName");
-        public final static Property FromTime = new Property(10, Short.class, "FromTime", false, "FromTime");
-        public final static Property ToTime = new Property(11, Short.class, "ToTime", false, "ToTime");
-        public final static Property TotalTime = new Property(12, Short.class, "TotalTime", false, "TotalTime");
+        public final static Property FromTimeOffset = new Property(10, Byte.class, "FromTimeOffset", false, "FromTimeOffset");
+        public final static Property ToTimeOffset = new Property(11, Byte.class, "ToTimeOffset", false, "ToTimeOffset");
+        public final static Property FromTime = new Property(12, Short.class, "FromTime", false, "FromTime");
+        public final static Property ToTime = new Property(13, Short.class, "ToTime", false, "ToTime");
+        public final static Property TotalTime = new Property(14, Short.class, "TotalTime", false, "TotalTime");
     };
 
     private DaoSession daoSession;
@@ -78,9 +80,11 @@ public class TrainDao extends AbstractDao<Train, Long> {
                 "\"ToId\" INTEGER," + // 7: ToId
                 "\"FromName\" TEXT," + // 8: FromName
                 "\"ToName\" TEXT," + // 9: ToName
-                "\"FromTime\" INTEGER," + // 10: FromTime
-                "\"ToTime\" INTEGER," + // 11: ToTime
-                "\"TotalTime\" INTEGER);"); // 12: TotalTime
+                "\"FromTimeOffset\" INTEGER," + // 10: FromTimeOffset
+                "\"ToTimeOffset\" INTEGER," + // 11: ToTimeOffset
+                "\"FromTime\" INTEGER," + // 12: FromTime
+                "\"ToTime\" INTEGER," + // 13: ToTime
+                "\"TotalTime\" INTEGER);"); // 14: TotalTime
     }
 
     /** Drops the underlying database table. */
@@ -144,19 +148,29 @@ public class TrainDao extends AbstractDao<Train, Long> {
             stmt.bindString(10, ToName);
         }
  
+        Byte FromTimeOffset = entity.getFromTimeOffset();
+        if (FromTimeOffset != null) {
+            stmt.bindLong(11, FromTimeOffset);
+        }
+ 
+        Byte ToTimeOffset = entity.getToTimeOffset();
+        if (ToTimeOffset != null) {
+            stmt.bindLong(12, ToTimeOffset);
+        }
+ 
         TimeSpan FromTime = entity.getFromTime();
         if (FromTime != null) {
-            stmt.bindLong(11, FromTimeConverter.convertToDatabaseValue(FromTime));
+            stmt.bindLong(13, FromTimeConverter.convertToDatabaseValue(FromTime));
         }
  
         TimeSpan ToTime = entity.getToTime();
         if (ToTime != null) {
-            stmt.bindLong(12, ToTimeConverter.convertToDatabaseValue(ToTime));
+            stmt.bindLong(14, ToTimeConverter.convertToDatabaseValue(ToTime));
         }
  
         TimeSpan TotalTime = entity.getTotalTime();
         if (TotalTime != null) {
-            stmt.bindLong(13, TotalTimeConverter.convertToDatabaseValue(TotalTime));
+            stmt.bindLong(15, TotalTimeConverter.convertToDatabaseValue(TotalTime));
         }
     }
 
@@ -186,9 +200,11 @@ public class TrainDao extends AbstractDao<Train, Long> {
             cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7), // ToId
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // FromName
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // ToName
-            cursor.isNull(offset + 10) ? null : FromTimeConverter.convertToEntityProperty(cursor.getShort(offset + 10)), // FromTime
-            cursor.isNull(offset + 11) ? null : ToTimeConverter.convertToEntityProperty(cursor.getShort(offset + 11)), // ToTime
-            cursor.isNull(offset + 12) ? null : TotalTimeConverter.convertToEntityProperty(cursor.getShort(offset + 12)) // TotalTime
+            cursor.isNull(offset + 10) ? null : (byte) cursor.getShort(offset + 10), // FromTimeOffset
+            cursor.isNull(offset + 11) ? null : (byte) cursor.getShort(offset + 11), // ToTimeOffset
+            cursor.isNull(offset + 12) ? null : FromTimeConverter.convertToEntityProperty(cursor.getShort(offset + 12)), // FromTime
+            cursor.isNull(offset + 13) ? null : ToTimeConverter.convertToEntityProperty(cursor.getShort(offset + 13)), // ToTime
+            cursor.isNull(offset + 14) ? null : TotalTimeConverter.convertToEntityProperty(cursor.getShort(offset + 14)) // TotalTime
         );
         return entity;
     }
@@ -206,9 +222,11 @@ public class TrainDao extends AbstractDao<Train, Long> {
         entity.setToId(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
         entity.setFromName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setToName(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setFromTime(cursor.isNull(offset + 10) ? null : FromTimeConverter.convertToEntityProperty(cursor.getShort(offset + 10)));
-        entity.setToTime(cursor.isNull(offset + 11) ? null : ToTimeConverter.convertToEntityProperty(cursor.getShort(offset + 11)));
-        entity.setTotalTime(cursor.isNull(offset + 12) ? null : TotalTimeConverter.convertToEntityProperty(cursor.getShort(offset + 12)));
+        entity.setFromTimeOffset(cursor.isNull(offset + 10) ? null : (byte) cursor.getShort(offset + 10));
+        entity.setToTimeOffset(cursor.isNull(offset + 11) ? null : (byte) cursor.getShort(offset + 11));
+        entity.setFromTime(cursor.isNull(offset + 12) ? null : FromTimeConverter.convertToEntityProperty(cursor.getShort(offset + 12)));
+        entity.setToTime(cursor.isNull(offset + 13) ? null : ToTimeConverter.convertToEntityProperty(cursor.getShort(offset + 13)));
+        entity.setTotalTime(cursor.isNull(offset + 14) ? null : TotalTimeConverter.convertToEntityProperty(cursor.getShort(offset + 14)));
      }
     
     /** @inheritdoc */
@@ -240,6 +258,7 @@ public class TrainDao extends AbstractDao<Train, Long> {
             if (trainOperator_TrainsQuery == null) {
                 QueryBuilder<Train> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.OperatorId.eq(null));
+                queryBuilder.orderRaw("T.'Name' ASC");
                 trainOperator_TrainsQuery = queryBuilder.build();
             }
         }
@@ -254,6 +273,7 @@ public class TrainDao extends AbstractDao<Train, Long> {
             if (trainType_TrainsQuery == null) {
                 QueryBuilder<Train> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.TypeId.eq(null));
+                queryBuilder.orderRaw("T.'Name' ASC");
                 trainType_TrainsQuery = queryBuilder.build();
             }
         }
@@ -268,6 +288,7 @@ public class TrainDao extends AbstractDao<Train, Long> {
             if (trainService_TrainsQuery == null) {
                 QueryBuilder<Train> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.ServiceId.eq(null));
+                queryBuilder.orderRaw("T.'Name' ASC");
                 trainService_TrainsQuery = queryBuilder.build();
             }
         }

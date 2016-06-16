@@ -1,9 +1,12 @@
 package ro.trenulmeu.mobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import ro.trenulmeu.mobile.fragments.RoutesFragment;
 import ro.trenulmeu.mobile.fragments.SplashFragment;
@@ -146,6 +155,41 @@ public class MainActivity extends AppCompatActivity
         i.putExtra(AlarmClock.EXTRA_HOUR, time.getCount(TimeSpan.TimeUnits.HOUR));
         i.putExtra(AlarmClock.EXTRA_MINUTES, time.getCount(TimeSpan.TimeUnits.MINUTE));
         startActivity(i);
+    }
+
+    public void showToast(@StringRes final int resId) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(AppContext.activity, resId, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void showToast(final String str) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(AppContext.activity, str, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof AutoCompleteTextView || v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
     }
 
 }

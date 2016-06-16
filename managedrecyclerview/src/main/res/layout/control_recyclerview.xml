@@ -22,5 +22,5 @@
         android:layout_height="wrap_content"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.trenulmeu.controls.ManagedRecyclerView"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 </LinearLayout>

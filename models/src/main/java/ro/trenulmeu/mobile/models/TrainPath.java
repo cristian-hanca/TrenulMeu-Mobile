@@ -20,8 +20,11 @@ public class TrainPath {
     private Long StationId;
     private TimeSpan Arrive;
     private TimeSpan Depart;
+    private TimeSpan DisplayArrive;
+    private TimeSpan DisplayDepart;
     private Integer Stationary;
     private Boolean IsStop;
+    private Boolean IsFinalStop;
     private Integer Speed;
 
     /** Used to resolve relations */
@@ -47,15 +50,18 @@ public class TrainPath {
         this.id = id;
     }
 
-    public TrainPath(Long id, Long TrainId, Float Km, Long StationId, TimeSpan Arrive, TimeSpan Depart, Integer Stationary, Boolean IsStop, Integer Speed) {
+    public TrainPath(Long id, Long TrainId, Float Km, Long StationId, TimeSpan Arrive, TimeSpan Depart, TimeSpan DisplayArrive, TimeSpan DisplayDepart, Integer Stationary, Boolean IsStop, Boolean IsFinalStop, Integer Speed) {
         this.id = id;
         this.TrainId = TrainId;
         this.Km = Km;
         this.StationId = StationId;
         this.Arrive = Arrive;
         this.Depart = Depart;
+        this.DisplayArrive = DisplayArrive;
+        this.DisplayDepart = DisplayDepart;
         this.Stationary = Stationary;
         this.IsStop = IsStop;
+        this.IsFinalStop = IsFinalStop;
         this.Speed = Speed;
     }
 
@@ -113,6 +119,22 @@ public class TrainPath {
         this.Depart = Depart;
     }
 
+    public TimeSpan getDisplayArrive() {
+        return DisplayArrive;
+    }
+
+    public void setDisplayArrive(TimeSpan DisplayArrive) {
+        this.DisplayArrive = DisplayArrive;
+    }
+
+    public TimeSpan getDisplayDepart() {
+        return DisplayDepart;
+    }
+
+    public void setDisplayDepart(TimeSpan DisplayDepart) {
+        this.DisplayDepart = DisplayDepart;
+    }
+
     public Integer getStationary() {
         return Stationary;
     }
@@ -127,6 +149,14 @@ public class TrainPath {
 
     public void setIsStop(Boolean IsStop) {
         this.IsStop = IsStop;
+    }
+
+    public Boolean getIsFinalStop() {
+        return IsFinalStop;
+    }
+
+    public void setIsFinalStop(Boolean IsFinalStop) {
+        this.IsFinalStop = IsFinalStop;
     }
 
     public Integer getSpeed() {

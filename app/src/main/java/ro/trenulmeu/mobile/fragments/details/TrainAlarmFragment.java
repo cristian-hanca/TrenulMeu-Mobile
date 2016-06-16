@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -13,10 +13,9 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Function;
 import com.annimon.stream.function.Predicate;
+import com.google.common.base.Strings;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
@@ -53,8 +52,9 @@ public class TrainAlarmFragment extends Fragment {
         final Train train = AppContext.selectedTrain;
 
         final View view = inflater.inflate(R.layout.fragment_train_alarm, container, false);
+        final EditText minutes = (EditText) view.findViewById(R.id.alarm_mins);
 
-        List<Station> options = Stream.of(train.getSortedStops())
+        List<Station> options = Stream.of(train.getStops())
                 .map(new Function<TrainPath, Station>() {
                     @Override
                     public Station apply(TrainPath value) {
@@ -64,7 +64,7 @@ public class TrainAlarmFragment extends Fragment {
                 .skip(1)
                 .collect(Collectors.<Station>toList());
         StationsAutoCompleteAdapter adapter = new StationsAutoCompleteAdapter(options,
-                android.R.layout.simple_spinner_dropdown_item);
+                android.R.layout.simple_spinner_item);
 
         final Spinner selector = (Spinner) view.findViewById(R.id.alarm_stations);
         selector.setAdapter(adapter);
@@ -81,8 +81,12 @@ public class TrainAlarmFragment extends Fragment {
                         }
                     }).findFirst().get();
 
-                    AppContext.activity.setAlarm(train.getTrainType().getName() + " " + train.getName(),
-                            selected.getName(), 5, path.getArrive().subtract(5, TimeSpan.TimeUnits.MINUTE));
+                    String minStr = minutes.getText().toString();
+                    int minutes = Strings.isNullOrEmpty(minStr) ? 5 : Integer.valueOf(minStr);
+
+                    AppContext.activity.setAlarm(train.getTrainType().getName() + " "
+                            + train.getName(), selected.getName(), minutes,
+                            path.getDisplayArrive().subtract(minutes, TimeSpan.TimeUnits.MINUTE));
                 }
             }
         });

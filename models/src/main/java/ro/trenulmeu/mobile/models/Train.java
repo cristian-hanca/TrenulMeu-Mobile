@@ -11,10 +11,6 @@ import ro.trenulmeu.mobile.timespan.TimeSpan;
 // KEEP INCLUDES - put your custom includes here
 import org.joda.time.DateTime;
 import java.util.Date;
-
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-import com.annimon.stream.function.Function;
 // KEEP INCLUDES END
 /**
  * Entity mapped to table "Train".
@@ -31,6 +27,8 @@ public class Train {
     private Long ToId;
     private String FromName;
     private String ToName;
+    private Byte FromTimeOffset;
+    private Byte ToTimeOffset;
     private TimeSpan FromTime;
     private TimeSpan ToTime;
     private TimeSpan TotalTime;
@@ -61,9 +59,6 @@ public class Train {
 
     // KEEP FIELDS - put your custom fields here
     private List<TrainPath> Stop;
-
-    private List<TrainPath> SortedPath;
-    private List<TrainPath> SortedStop;
     // KEEP FIELDS END
 
     public Train() {
@@ -73,7 +68,7 @@ public class Train {
         this.id = id;
     }
 
-    public Train(Long id, Long OperatorId, Long TypeId, Long ServiceId, String Name, String OriginalName, Long FromId, Long ToId, String FromName, String ToName, TimeSpan FromTime, TimeSpan ToTime, TimeSpan TotalTime) {
+    public Train(Long id, Long OperatorId, Long TypeId, Long ServiceId, String Name, String OriginalName, Long FromId, Long ToId, String FromName, String ToName, Byte FromTimeOffset, Byte ToTimeOffset, TimeSpan FromTime, TimeSpan ToTime, TimeSpan TotalTime) {
         this.id = id;
         this.OperatorId = OperatorId;
         this.TypeId = TypeId;
@@ -84,6 +79,8 @@ public class Train {
         this.ToId = ToId;
         this.FromName = FromName;
         this.ToName = ToName;
+        this.FromTimeOffset = FromTimeOffset;
+        this.ToTimeOffset = ToTimeOffset;
         this.FromTime = FromTime;
         this.ToTime = ToTime;
         this.TotalTime = TotalTime;
@@ -173,6 +170,22 @@ public class Train {
 
     public void setToName(String ToName) {
         this.ToName = ToName;
+    }
+
+    public Byte getFromTimeOffset() {
+        return FromTimeOffset;
+    }
+
+    public void setFromTimeOffset(Byte FromTimeOffset) {
+        this.FromTimeOffset = FromTimeOffset;
+    }
+
+    public Byte getToTimeOffset() {
+        return ToTimeOffset;
+    }
+
+    public void setToTimeOffset(Byte ToTimeOffset) {
+        this.ToTimeOffset = ToTimeOffset;
     }
 
     public TimeSpan getFromTime() {
@@ -418,46 +431,6 @@ public class Train {
         Stop = null;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<TrainPath> getSortedPath() {
-        if (SortedPath == null) {
-            List<TrainPath> newList = (List<TrainPath>) Stream.of(getPath())
-                    .sortBy(new Function<TrainPath, Comparable>() {
-                        @Override
-                        public Comparable apply(TrainPath value) {
-                            return value.getKm();
-                        }
-                    })
-                    .collect(Collectors.<TrainPath>toList());
-            synchronized (this) {
-                if(SortedPath == null) {
-                    SortedPath = newList;
-                }
-            }
-        }
-        return SortedPath;
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<TrainPath> getSortedStops() {
-        if (SortedStop == null) {
-            List<TrainPath> newList = (List<TrainPath>) Stream.of(getStops())
-                    .sortBy(new Function<TrainPath, Comparable>() {
-                        @Override
-                        public Comparable apply(TrainPath value) {
-                            return value.getKm();
-                        }
-                    })
-                    .collect(Collectors.<TrainPath>toList());
-            synchronized (this) {
-                if(SortedStop == null) {
-                    SortedStop = newList;
-                }
-            }
-        }
-        return SortedStop;
-    }
-
     public boolean runsOnDate(Date date) {
         for (TrainAvailability a : getAvailability()) {
             if (a.runsOnDate(date)) {
@@ -474,11 +447,13 @@ public class Train {
                 short from = getFromTime().getTicks();
                 short to = getToTime().getTicks();
 
-                if (now < from && from > to) {
-                    return from < to;
-                } else if (from < now) {
-                    return now < to;
+                while (now < to) {
+                    if (from < now && now < to) {
+                        return true;
+                    }
+                    now += 60 * 24;
                 }
+                return false;
             }
         }
         return false;

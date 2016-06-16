@@ -27,7 +27,7 @@ public class StationDao extends AbstractDao<Station, Long> {
         public final static Property Name = new Property(1, String.class, "Name", false, "Name");
         public final static Property Lat = new Property(2, Float.class, "Lat", false, "Lat");
         public final static Property Lon = new Property(3, Float.class, "Lon", false, "Lon");
-        public final static Property TimeOffset = new Property(4, Integer.class, "TimeOffset", false, "TimeOffset");
+        public final static Property TimeOffset = new Property(4, Byte.class, "TimeOffset", false, "TimeOffset");
     };
 
 
@@ -81,7 +81,7 @@ public class StationDao extends AbstractDao<Station, Long> {
             stmt.bindDouble(4, Lon);
         }
  
-        Integer TimeOffset = entity.getTimeOffset();
+        Byte TimeOffset = entity.getTimeOffset();
         if (TimeOffset != null) {
             stmt.bindLong(5, TimeOffset);
         }
@@ -101,7 +101,7 @@ public class StationDao extends AbstractDao<Station, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // Name
             cursor.isNull(offset + 2) ? null : cursor.getFloat(offset + 2), // Lat
             cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3), // Lon
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // TimeOffset
+            cursor.isNull(offset + 4) ? null : (byte) cursor.getShort(offset + 4) // TimeOffset
         );
         return entity;
     }
@@ -113,7 +113,7 @@ public class StationDao extends AbstractDao<Station, Long> {
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setLat(cursor.isNull(offset + 2) ? null : cursor.getFloat(offset + 2));
         entity.setLon(cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3));
-        entity.setTimeOffset(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setTimeOffset(cursor.isNull(offset + 4) ? null : (byte) cursor.getShort(offset + 4));
      }
     
     /** @inheritdoc */

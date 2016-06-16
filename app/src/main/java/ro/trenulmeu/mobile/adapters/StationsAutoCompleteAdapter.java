@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class StationsAutoCompleteAdapter extends BaseAdapter implements Filterab
 
     private @LayoutRes int layoutId;
     private List<Station> dataSet = new ArrayList<>();
+
     private List<Station> filterSet = new ArrayList<>();
 
     private StationFilter filter;
@@ -86,10 +86,10 @@ public class StationsAutoCompleteAdapter extends BaseAdapter implements Filterab
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint != null && constraint.length() > 0){
+                String con = StringHelpers.normalize(constraint.toString());
                 ArrayList<Station> filterList = new ArrayList<>();
-                for (int i=0; i < filterSet.size();i++){
-                    if (StringHelpers.normalize(filterSet.get(i).getName())
-                            .contains(StringHelpers.normalize(constraint.toString()))) {
+                for (int i=0; i < filterSet.size(); i++){
+                    if (AppContext.stationNameMap.get(filterSet.get(i)).contains(con)) {
                         Station contacts = new Station();
                         contacts.setName(filterSet.get(i).getName());
                         contacts.setId(filterSet.get(i).getId());

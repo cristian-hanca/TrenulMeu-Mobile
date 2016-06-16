@@ -10,8 +10,10 @@ import java.util.List;
 
 import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
+import ro.trenulmeu.mobile.helpers.TimeHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.FilterableRecyclerViewAdapter;
 import ro.trenulmeu.mobile.models.Train;
+import ro.trenulmeu.mobile.timespan.TimeSpan;
 
 public class TrainsAdapter extends FilterableRecyclerViewAdapter<Train, TrainsAdapter.ViewHolder> {
 
@@ -37,8 +39,8 @@ public class TrainsAdapter extends FilterableRecyclerViewAdapter<Train, TrainsAd
         holder.nameText.setText(item.getName());
         holder.fromText.setText(item.getFromName());
         holder.toText.setText(item.getToName());
-        holder.fromTimeText.setText(item.getFromTime().toString());
-        holder.toTimeText.setText(item.getToTime().toString());
+        holder.fromTimeText.setText(TimeHelpers.getCorrectFrom(item).toString());
+        holder.toTimeText.setText(TimeHelpers.getCorrectTo(item).subtract(TimeSpan.TimeUnits.DAY).toString());
         holder.dividerImage.setVisibility(position == getItemCount() - 1 ? View.GONE : View.VISIBLE);
     }
 

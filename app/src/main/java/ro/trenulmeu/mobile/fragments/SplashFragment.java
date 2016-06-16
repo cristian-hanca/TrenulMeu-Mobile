@@ -7,13 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import retrofit2.Call;
@@ -27,7 +27,9 @@ import ro.trenulmeu.mobile.helpers.CleanupDatabaseFetchCallbacks;
 import ro.trenulmeu.mobile.helpers.CleanupFetchCallbacks;
 import ro.trenulmeu.mobile.helpers.DatabaseHelpers;
 import ro.trenulmeu.mobile.helpers.NetworkHelpers;
+import ro.trenulmeu.mobile.helpers.StringHelpers;
 import ro.trenulmeu.mobile.models.DataBaseStatus;
+import ro.trenulmeu.mobile.models.Station;
 
 /**
  * Splash Fragment.
@@ -256,6 +258,11 @@ public class SplashFragment extends Fragment {
 
             // Check if it works...
             AppContext.db.getDataBaseStatusDao().queryBuilder().list();
+
+            AppContext.stationNameMap = new HashMap<>();
+            for (Station s : AppContext.db.getStationDao().loadAll()) {
+                AppContext.stationNameMap.put(s, StringHelpers.normalize(s.getName()));
+            }
 
             if (checkValidity) {
                 checkValidity();

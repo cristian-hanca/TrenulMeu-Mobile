@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import org.joda.time.DateTime;

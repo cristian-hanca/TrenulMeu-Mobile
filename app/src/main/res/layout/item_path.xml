@@ -77,15 +77,36 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/placeholder_time"
-            android:id="@+id/path_in"
-            android:layout_gravity="center"
-            android:typeface="monospace"
-            android:textSize="@dimen/text_medium" />
+            android:id="@+id/path_in_layout"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_time"
+                android:id="@+id/path_in"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_delay"
+                android:id="@+id/path_in_delay"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:layout_weight="1"
+                android:textColor="@color/red" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,15 +117,36 @@
             android:layout_gravity="center"
             android:textSize="@dimen/text_medium" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/placeholder_time"
-            android:id="@+id/path_out"
-            android:layout_gravity="center"
-            android:typeface="monospace"
-            android:textSize="@dimen/text_medium" />
+            android:id="@+id/path_out_layout"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_time"
+                android:id="@+id/path_out"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_delay"
+                android:id="@+id/path_out_delay"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:layout_weight="1"
+                android:textColor="@color/red" />
+        </LinearLayout>
 
     </TableRow>
 

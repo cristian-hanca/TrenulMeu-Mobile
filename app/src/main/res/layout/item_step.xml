@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/item_step_stop">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_step_stop_img"
+            android:contentDescription="@string/position"
+            android:layout_gravity="center"
+            android:src="@drawable/path_int_used"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_time"
+                android:id="@+id/item_step_stop_in"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/placeholder_time"
+                android:id="@+id/item_step_stop_out"
+                android:layout_gravity="center"
+                android:typeface="monospace"
+                android:textSize="@dimen/text_medium"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/placeholder_station"
+            android:id="@+id/item_step_stop_station"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|start"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/item_step_train">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_step_train_img"
+            android:contentDescription="@string/position"
+            android:layout_gravity="center"
+            android:src="@drawable/path_no_used"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp" />
+
+        <ImageView
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/type6"
+            android:id="@+id/item_step_train_type"
+            android:contentDescription="@string/type" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/placeholder_name"
+            android:id="@+id/item_step_train_name"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start" />
+    </LinearLayout>
+
+</LinearLayout>

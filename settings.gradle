@@ -1,1 +1,1 @@
-include ':app', ':daogenerator', ':models', ':timespan', ':api', ':managedrecyclerview', ':filters'
+include ':app', ':daogenerator', ':models', ':timespan', ':api', ':managedrecyclerview', ':filters', ':managedfragments'

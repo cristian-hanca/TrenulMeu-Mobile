@@ -1,5 +1,7 @@
 package ro.trenulmeu.mobile;
 
+import java.util.Map;
+
 import ro.trenulmeu.mobile.filters.StationsFilters;
 import ro.trenulmeu.mobile.filters.TrainsFilters;
 import ro.trenulmeu.mobile.helpers.DataCache;
@@ -42,6 +44,11 @@ public class AppContext {
      * Station Filter to be used in the StationsFragment.
      */
     public static StationsFilters stationFilter = null;
+
+    /**
+     * Map between Stations and their Normalized Station Name.
+     */
+    public static Map<Station, String> stationNameMap = null;
 
     /**
      * Data Cache Singleton.

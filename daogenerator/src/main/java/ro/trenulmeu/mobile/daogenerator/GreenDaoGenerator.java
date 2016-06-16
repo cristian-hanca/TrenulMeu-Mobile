@@ -93,7 +93,7 @@ public class GreenDaoGenerator {
         entity.addStringProperty("Name").columnName("Name");
         entity.addFloatProperty("Lat").columnName("Lat");
         entity.addFloatProperty("Lon").columnName("Lon");
-        entity.addIntProperty("TimeOffset").columnName("TimeOffset");
+        entity.addByteProperty("TimeOffset").columnName("TimeOffset");
 
         return entity;
     }
@@ -106,12 +106,14 @@ public class GreenDaoGenerator {
         Property trainOperator = entity.addLongProperty("OperatorId").columnName("OperatorId").getProperty();
         Property trainTypeP = entity.addLongProperty("TypeId").columnName("TypeId").getProperty();
         Property trainServiceP = entity.addLongProperty("ServiceId").columnName("ServiceId").getProperty();
-        entity.addStringProperty("Name").columnName("Name");
+        Property trainName = entity.addStringProperty("Name").columnName("Name").getProperty();
         entity.addStringProperty("OriginalName").columnName("OriginalName");
         Property trainFrom = entity.addLongProperty("FromId").columnName("FromId").getProperty();
         Property trainTo = entity.addLongProperty("ToId").columnName("ToId").getProperty();
         entity.addStringProperty("FromName").columnName("FromName");
         entity.addStringProperty("ToName").columnName("ToName");
+        entity.addByteProperty("FromTimeOffset").columnName("FromTimeOffset");
+        entity.addByteProperty("ToTimeOffset").columnName("ToTimeOffset");
         entity.addShortProperty("FromTime").columnName("FromTime")
                 .customType("ro.trenulmeu.mobile.timespan.TimeSpan", "ro.trenulmeu.mobile.timespan.TimeSpanAdapter");
         entity.addShortProperty("ToTime").columnName("ToTime")
@@ -123,9 +125,9 @@ public class GreenDaoGenerator {
         entity.addToOne(service, trainServiceP, "TrainService");
         entity.addToOne(station, trainFrom, "From");
         entity.addToOne(station, trainTo, "To");
-        operator.addToMany(entity, trainOperator, "Trains");
-        type.addToMany(entity, trainTypeP, "Trains");
-        service.addToMany(entity, trainServiceP, "Trains");
+        operator.addToMany(entity, trainOperator, "Trains").orderAsc(trainName);
+        type.addToMany(entity, trainTypeP, "Trains").orderAsc(trainName);
+        service.addToMany(entity, trainServiceP, "Trains").orderAsc(trainName);
 
         return entity;
     }
@@ -157,8 +159,13 @@ public class GreenDaoGenerator {
                 .customType("ro.trenulmeu.mobile.timespan.TimeSpan", "ro.trenulmeu.mobile.timespan.TimeSpanAdapter");
         entity.addShortProperty("Depart").columnName("Depart")
                 .customType("ro.trenulmeu.mobile.timespan.TimeSpan", "ro.trenulmeu.mobile.timespan.TimeSpanAdapter");
+        entity.addShortProperty("DisplayArrive").columnName("DisplayArrive")
+                .customType("ro.trenulmeu.mobile.timespan.TimeSpan", "ro.trenulmeu.mobile.timespan.TimeSpanAdapter");
+        entity.addShortProperty("DisplayDepart").columnName("DisplayDepart")
+                .customType("ro.trenulmeu.mobile.timespan.TimeSpan", "ro.trenulmeu.mobile.timespan.TimeSpanAdapter");
         entity.addIntProperty("Stationary").columnName("Stationary");
         entity.addBooleanProperty("IsStop").columnName("IsStop");
+        entity.addBooleanProperty("IsFinalStop").columnName("IsFinalStop");
         entity.addIntProperty("Speed").columnName("Speed");
         entity.addToOne(train, pathTrain, "Train");
         entity.addToOne(station, pathStation, "Station");

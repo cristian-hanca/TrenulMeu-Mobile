@@ -37,15 +37,20 @@ public class TrainPathDao extends AbstractDao<TrainPath, Long> {
         public final static Property StationId = new Property(3, Long.class, "StationId", false, "StationId");
         public final static Property Arrive = new Property(4, Short.class, "Arrive", false, "Arrive");
         public final static Property Depart = new Property(5, Short.class, "Depart", false, "Depart");
-        public final static Property Stationary = new Property(6, Integer.class, "Stationary", false, "Stationary");
-        public final static Property IsStop = new Property(7, Boolean.class, "IsStop", false, "IsStop");
-        public final static Property Speed = new Property(8, Integer.class, "Speed", false, "Speed");
+        public final static Property DisplayArrive = new Property(6, Short.class, "DisplayArrive", false, "DisplayArrive");
+        public final static Property DisplayDepart = new Property(7, Short.class, "DisplayDepart", false, "DisplayDepart");
+        public final static Property Stationary = new Property(8, Integer.class, "Stationary", false, "Stationary");
+        public final static Property IsStop = new Property(9, Boolean.class, "IsStop", false, "IsStop");
+        public final static Property IsFinalStop = new Property(10, Boolean.class, "IsFinalStop", false, "IsFinalStop");
+        public final static Property Speed = new Property(11, Integer.class, "Speed", false, "Speed");
     };
 
     private DaoSession daoSession;
 
     private final TimeSpanAdapter ArriveConverter = new TimeSpanAdapter();
     private final TimeSpanAdapter DepartConverter = new TimeSpanAdapter();
+    private final TimeSpanAdapter DisplayArriveConverter = new TimeSpanAdapter();
+    private final TimeSpanAdapter DisplayDepartConverter = new TimeSpanAdapter();
     private Query<TrainPath> train_PathQuery;
 
     public TrainPathDao(DaoConfig config) {
@@ -67,9 +72,12 @@ public class TrainPathDao extends AbstractDao<TrainPath, Long> {
                 "\"StationId\" INTEGER," + // 3: StationId
                 "\"Arrive\" INTEGER," + // 4: Arrive
                 "\"Depart\" INTEGER," + // 5: Depart
-                "\"Stationary\" INTEGER," + // 6: Stationary
-                "\"IsStop\" INTEGER," + // 7: IsStop
-                "\"Speed\" INTEGER);"); // 8: Speed
+                "\"DisplayArrive\" INTEGER," + // 6: DisplayArrive
+                "\"DisplayDepart\" INTEGER," + // 7: DisplayDepart
+                "\"Stationary\" INTEGER," + // 8: Stationary
+                "\"IsStop\" INTEGER," + // 9: IsStop
+                "\"IsFinalStop\" INTEGER," + // 10: IsFinalStop
+                "\"Speed\" INTEGER);"); // 11: Speed
     }
 
     /** Drops the underlying database table. */
@@ -113,19 +121,34 @@ public class TrainPathDao extends AbstractDao<TrainPath, Long> {
             stmt.bindLong(6, DepartConverter.convertToDatabaseValue(Depart));
         }
  
+        TimeSpan DisplayArrive = entity.getDisplayArrive();
+        if (DisplayArrive != null) {
+            stmt.bindLong(7, DisplayArriveConverter.convertToDatabaseValue(DisplayArrive));
+        }
+ 
+        TimeSpan DisplayDepart = entity.getDisplayDepart();
+        if (DisplayDepart != null) {
+            stmt.bindLong(8, DisplayDepartConverter.convertToDatabaseValue(DisplayDepart));
+        }
+ 
         Integer Stationary = entity.getStationary();
         if (Stationary != null) {
-            stmt.bindLong(7, Stationary);
+            stmt.bindLong(9, Stationary);
         }
  
         Boolean IsStop = entity.getIsStop();
         if (IsStop != null) {
-            stmt.bindLong(8, IsStop ? 1L: 0L);
+            stmt.bindLong(10, IsStop ? 1L: 0L);
+        }
+ 
+        Boolean IsFinalStop = entity.getIsFinalStop();
+        if (IsFinalStop != null) {
+            stmt.bindLong(11, IsFinalStop ? 1L: 0L);
         }
  
         Integer Speed = entity.getSpeed();
         if (Speed != null) {
-            stmt.bindLong(9, Speed);
+            stmt.bindLong(12, Speed);
         }
     }
 
@@ -151,9 +174,12 @@ public class TrainPathDao extends AbstractDao<TrainPath, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // StationId
             cursor.isNull(offset + 4) ? null : ArriveConverter.convertToEntityProperty(cursor.getShort(offset + 4)), // Arrive
             cursor.isNull(offset + 5) ? null : DepartConverter.convertToEntityProperty(cursor.getShort(offset + 5)), // Depart
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // Stationary
-            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // IsStop
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8) // Speed
+            cursor.isNull(offset + 6) ? null : DisplayArriveConverter.convertToEntityProperty(cursor.getShort(offset + 6)), // DisplayArrive
+            cursor.isNull(offset + 7) ? null : DisplayDepartConverter.convertToEntityProperty(cursor.getShort(offset + 7)), // DisplayDepart
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // Stationary
+            cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0, // IsStop
+            cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0, // IsFinalStop
+            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11) // Speed
         );
         return entity;
     }
@@ -167,9 +193,12 @@ public class TrainPathDao extends AbstractDao<TrainPath, Long> {
         entity.setStationId(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setArrive(cursor.isNull(offset + 4) ? null : ArriveConverter.convertToEntityProperty(cursor.getShort(offset + 4)));
         entity.setDepart(cursor.isNull(offset + 5) ? null : DepartConverter.convertToEntityProperty(cursor.getShort(offset + 5)));
-        entity.setStationary(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setIsStop(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
-        entity.setSpeed(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setDisplayArrive(cursor.isNull(offset + 6) ? null : DisplayArriveConverter.convertToEntityProperty(cursor.getShort(offset + 6)));
+        entity.setDisplayDepart(cursor.isNull(offset + 7) ? null : DisplayDepartConverter.convertToEntityProperty(cursor.getShort(offset + 7)));
+        entity.setStationary(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setIsStop(cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0);
+        entity.setIsFinalStop(cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0);
+        entity.setSpeed(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
      }
     
     /** @inheritdoc */

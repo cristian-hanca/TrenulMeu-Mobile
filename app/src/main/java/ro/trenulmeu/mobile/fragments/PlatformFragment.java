@@ -1,7 +1,6 @@
 package ro.trenulmeu.mobile.fragments;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -26,16 +25,15 @@ import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.Constants;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.adapters.PlatformAdapter;
-import ro.trenulmeu.mobile.adapters.StationsAdapter;
 import ro.trenulmeu.mobile.dialogs.DateTimeDialog;
 import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
 import ro.trenulmeu.mobile.helpers.FragmentHelpers;
+import ro.trenulmeu.mobile.helpers.TimeHelpers;
 import ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.RecyclerViewClickListener;
 import ro.trenulmeu.mobile.models.Station;
 import ro.trenulmeu.mobile.models.TrainPath;
 import ro.trenulmeu.mobile.models.TrainPathDao;
-import ro.trenulmeu.mobile.models.TrainType;
 import ro.trenulmeu.mobile.timespan.TimeSpan;
 
 public class PlatformFragment extends Fragment {
@@ -59,8 +57,8 @@ public class PlatformFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        AppContext.activity.setTitle(R.string.title_platform);
         station = AppContext.selectedStation;
+        AppContext.activity.setTitle(station.getName());
         if (dateTime == null) {
             dateTime = DateTime.now();
         }
@@ -152,23 +150,26 @@ public class PlatformFragment extends Fragment {
 
     private void UpdateList() {
         adapter.setShowArrival(isArrive);
-        final Date date = dateTime.toDate();
-        int point = dateTime.getHourOfDay() * 60 + dateTime.getMinuteOfHour();
+        int point = TimeHelpers.getCorrectTime(
+                new TimeSpan(0, dateTime.getHourOfDay(), dateTime.getMinuteOfHour()),
+                station.getTimeOffset()).getTicks();
 
         QueryBuilder<TrainPath> query = AppContext.db.getTrainPathDao().queryBuilder()
                     .where(TrainPathDao.Properties.StationId.eq(station.getId()));
         if (isArrive) {
-            query = query.where(TrainPathDao.Properties.Arrive.ge(point))
+            query = query.where(TrainPathDao.Properties.DisplayArrive.ge(point))
                     .where(TrainPathDao.Properties.Km.gt(0))
                     .orderAsc(TrainPathDao.Properties.Arrive);
         } else {
-            query = query.where(TrainPathDao.Properties.Depart.ge(point))
+            query = query.where(TrainPathDao.Properties.DisplayDepart.ge(point))
+                    .where(TrainPathDao.Properties.IsFinalStop.eq(false))
                     .orderAsc(TrainPathDao.Properties.Depart);
         }
         if (onlyStop) {
             query = query.where(TrainPathDao.Properties.IsStop.eq(true));
         }
 
+        final Date date = dateTime.toDate();
         List<TrainPath> ls = Stream.of(query.list()).filter(new Predicate<TrainPath>() {
             @Override
             public boolean test(TrainPath value) {

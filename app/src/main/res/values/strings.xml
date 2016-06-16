@@ -22,6 +22,11 @@
     <string name="error_database_expired">Database is Expired, thus information may not be accurate and some features may not work. Please check periodically for updates.</string>
     <string name="error_database_download">Database download failed! Please restart the application in order to get a new database.</string>
     <string name="error_database_no_internet">You have no Database installed, nor do you have an Internet connection. You need to download a database before your first use of the application. Please restart the application when you have Internet in order to Donwload the database.</string>
+    <string name="error_routes_download">An Error occurred while getting the Routes:</string>
+    <string name="error_routes_no_items_1">No Routes were found!</string>
+    <string name="error_routes_no_items_2">Consider checking from a different hour.</string>
+
+    <string name="how_to_routes">Select two Stations and the Date then press the Green Arrow Icon on Top to search.</string>
 
     <string name="placeholder">Placeholder</string>
     <string name="placeholder_type">TrainType</string>
@@ -34,6 +39,7 @@
     <string name="placeholder_date">30/12/16</string>
     <string name="placeholder_datetime">30/12/16 29:59</string>
     <string name="placeholder_km">999.99</string>
+    <string name="placeholder_number">9</string>
 
     <string name="menu_routes">Routes</string>
     <string name="menu_trains">Trains</string>
@@ -116,4 +122,18 @@
     <string name="alarm_msg">Train %1$s arrives at %2$s in %3$s minutes.</string>
     <string name="alarm_msg_1">Announce me when the train will arrive in</string>
     <string name="set">Set</string>
+    <string name="empty_time">--:--</string>
+    <string name="just">Just</string>
+    <string name="minutes_before">Minutes before.</string>
+    <string name="default_mins">5</string>
+    <string name="dash">-</string>
+    <string name="total_time">Total Time</string>
+    <string name="changes">Changes</string>
+    <string name="placeholder_delay">+999</string>
+    <string name="load_delays">Load Delays</string>
+    <string name="error_delay_available">Delay information not Available</string>
+    <string name="error_delay">Something went wrong while getting Delay</string>
+    <string name="no_delay">No Delay!</string>
+    <string name="loading_delays">Loading Delays</string>
+    <string name="minutes_delay">Minutes Delay</string>
 </resources>

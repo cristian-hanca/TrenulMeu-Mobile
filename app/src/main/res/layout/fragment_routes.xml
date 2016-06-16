@@ -19,151 +19,149 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/from"
-                    android:layout_marginRight="5dp" />
-
-                <AutoCompleteTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder_station"
-                    android:id="@+id/route_from" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/route_flip"
-                    android:src="@drawable/flip"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/flip" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/to"
-                    android:layout_marginRight="5dp" />
-
-                <AutoCompleteTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder_station"
-                    android:id="@+id/route_to" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/route_go"
-                    android:contentDescription="@string/go"
-                    android:src="@drawable/go_route"
-                    android:layout_gravity="center" />
-            </TableRow>
-        </TableLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="6dp"
-        android:background="@color/background_nav"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp">
+        android:layout_marginBottom="5dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/date"
-                android:layout_marginRight="5dp"
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/placeholder_datetime"
-                android:id="@+id/route_date"
-                android:layout_gravity="center"
-                android:gravity="center_vertical|start"
-                android:layout_weight="1" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/from"
+                        android:layout_marginRight="5dp" />
+
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_station"
+                        android:id="@+id/route_from"
+                        android:focusableInTouchMode="true" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/route_flip"
+                        android:src="@drawable/flip"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/flip" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/to"
+                        android:layout_marginRight="5dp" />
+
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_station"
+                        android:id="@+id/route_to"
+                        android:focusableInTouchMode="true" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/route_go"
+                        android:contentDescription="@string/go"
+                        android:src="@drawable/go_route"
+                        android:layout_gravity="center" />
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/change"
-                android:id="@+id/route_change"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginRight="10dp" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/date"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/placeholder_datetime"
+                    android:id="@+id/route_date"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical|start"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/change"
+                    android:id="@+id/route_change"
+                    android:textAllCaps="true"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <include
+        layout="@layout/howto_routes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/how_to" />
+
+    <include
+        layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading" />
+
+    <include
+        layout="@layout/no_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/no_items" />
+
+    <ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView
+        android:id="@+id/list"
+        android:name="ro.trenulmeu.mobile.fragments.RoutesFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="6dp"
-        android:background="@color/background_nav"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="1">
-
-        <ro.trenulmeu.mobile.managedrecyclerview.ManagedRecyclerView
-            android:id="@+id/list"
-            android:name="ro.trenulmeu.mobile.fragments.RoutesFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:context="ro.trenulmeu.mobile.fragments.RoutesFragment" />
-    </android.support.v7.widget.CardView>
+        android:layout_weight="1"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="ro.trenulmeu.mobile.fragments.RoutesFragment" />
 
 </LinearLayout>

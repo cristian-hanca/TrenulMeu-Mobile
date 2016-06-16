@@ -8,11 +8,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ro.trenulmeu.mobile.AppContext;
 import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.managedrecyclerview.adapter.FilterableRecyclerViewAdapter;
 import ro.trenulmeu.mobile.models.Station;
-import ro.trenulmeu.mobile.models.Train;
 
 public class StationsAdapter extends FilterableRecyclerViewAdapter<Station, StationsAdapter.ViewHolder> {
 

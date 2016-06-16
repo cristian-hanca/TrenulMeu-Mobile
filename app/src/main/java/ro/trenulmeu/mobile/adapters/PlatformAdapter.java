@@ -1,6 +1,5 @@
 package ro.trenulmeu.mobile.adapters;
 
-import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -61,10 +60,18 @@ public class PlatformAdapter extends FilterableRecyclerViewAdapter<TrainPath, Pl
             holder.headerRow.setVisibility(View.GONE);
         }
 
-        holder.inText.setText(item.getArrive().toString());
-        holder.outText.setText(item.getDepart().toString());
-        holder.dividerImage.setVisibility(position == getItemCount() - 1 ? View.GONE : View.VISIBLE);
+        if (item.getKm() == 0) {
+            holder.inText.setText(R.string.empty_time);
+            holder.outText.setText(item.getDisplayDepart().toString());
+        } else if (item.getIsFinalStop()) {
+            holder.inText.setText(item.getDisplayArrive().toString());
+            holder.outText.setText(R.string.empty_time);
+        } else {
+            holder.inText.setText(item.getDisplayArrive().toString());
+            holder.outText.setText(item.getDisplayDepart().toString());
+        }
 
+        holder.dividerImage.setVisibility(position == getItemCount() - 1 ? View.GONE : View.VISIBLE);
         setColor(holder, isStop ? R.color.text : R.color.text_muted);
     }
 
