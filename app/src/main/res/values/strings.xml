@@ -13,8 +13,9 @@
     <string name="title_platform">Platform</string>
     <string name="title_routes">From A to B…</string>
     <string name="title_train_glance">At A Glance</string>
-    <string name="title_train_service">Onboard Services</string>
+    <string name="title_train_service">On-board Services</string>
     <string name="title_train_path">Train Path</string>
+    <string name="title_train_map">Train Map</string>
     <string name="title_train_availability">Train Availability</string>
     <string name="title_train_alarm">Set Train Alarm</string>
 
@@ -40,6 +41,7 @@
     <string name="placeholder_datetime">30/12/16 29:59</string>
     <string name="placeholder_km">999.99</string>
     <string name="placeholder_number">9</string>
+    <string name="placeholder_operator">Operator Name</string>
 
     <string name="menu_routes">Routes</string>
     <string name="menu_trains">Trains</string>
@@ -136,4 +138,6 @@
     <string name="no_delay">No Delay!</string>
     <string name="loading_delays">Loading Delays</string>
     <string name="minutes_delay">Minutes Delay</string>
+    <string name="operator">Operator</string>
+    <string name="done">Done</string>
 </resources>

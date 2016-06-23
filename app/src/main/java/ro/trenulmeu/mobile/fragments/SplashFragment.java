@@ -318,6 +318,7 @@ public class SplashFragment extends Fragment {
         serverStatus = AppContext.cache.get(Constants.serverStatus_key, DataBaseStatus.class);
         serverStatusFetch = AppContext.cache.get(serverStatusFetch_key, FetchUnit.class);
         dataBaseFetch = AppContext.cache.get(dataBaseFetch_key, DataBaseFetch.class);
+
         super.onAttach(context);
     }
 

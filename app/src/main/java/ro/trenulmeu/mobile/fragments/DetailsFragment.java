@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import ro.trenulmeu.mobile.R;
 import ro.trenulmeu.mobile.fragments.details.TrainAlarmFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainAvailabilityFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainGlanceFragment;
+import ro.trenulmeu.mobile.fragments.details.TrainMapFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainPathFragment;
 import ro.trenulmeu.mobile.fragments.details.TrainServiceFragment;
 import ro.trenulmeu.mobile.models.Train;
@@ -25,21 +27,16 @@ public class DetailsFragment extends Fragment {
     private static final String serviceTag = "serviceTag";
     private static final String pathTag = "pathTag";
     private static final String availabilityTag = "availabilityTag";
+    private static final String mapTag = "mapTag";
     private static final String alarmTag = "alarmTag";
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         Train train = AppContext.selectedTrain;
-        AppContext.activity.setTitle(R.string.title_details);
+        AppContext.activity.setTitle(train.getTrainType().getName() + " " + train.getName());
 
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-
-        ((ImageView) view.findViewById(R.id.train_type_img)).setImageResource(
-                AppContext.activity.getResources().getIdentifier(
-                        "type" + train.getTypeId(), "drawable", AppContext.activity.getPackageName()));
-        ((TextView) view.findViewById(R.id.train_type_name)).setText(train.getTrainType().getLongName());
-        ((TextView) view.findViewById(R.id.train_name)).setText(train.getName());
 
         TrainGlanceFragment glance = findFragment(glanceTag, TrainGlanceFragment.class);
         if (glance == null) {
@@ -58,6 +55,13 @@ public class DetailsFragment extends Fragment {
             path = TrainPathFragment.newInstance(true, true);
             addFragment(R.id.details_path, pathTag, path);
         }
+
+        TrainMapFragment map = findFragment(mapTag, TrainMapFragment.class);
+        if (map == null) {
+            map = TrainMapFragment.newInstance(true);
+            addFragment(R.id.details_map, mapTag, map);
+        }
+        map.setScrollParent((NestedScrollView) view.findViewById(R.id.scroll));
 
         TrainAvailabilityFragment availability = findFragment(availabilityTag, TrainAvailabilityFragment.class);
         if (availability == null) {

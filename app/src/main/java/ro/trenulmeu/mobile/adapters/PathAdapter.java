@@ -45,12 +45,15 @@ public class PathAdapter extends
         this.isStop = false;
         this.delay = delay;
 
+        this.localTime = new TimeSpan(time);
+        localTime = localTime.subtract(delay, TimeSpan.TimeUnits.MINUTE).absoluteDay();
+
         if (train.runsOnDateTime(DateTime.now()
-                .withHourOfDay(time.getCount(TimeSpan.TimeUnits.HOUR))
-                .withMinuteOfHour(time.getCount(TimeSpan.TimeUnits.MINUTE))
+                .withHourOfDay(localTime.getCount(TimeSpan.TimeUnits.HOUR))
+                .withMinuteOfHour(localTime.getCount(TimeSpan.TimeUnits.MINUTE))
                 .toDate())) {
-            this.localTime = new TimeSpan(time);
-            localTime = localTime.subtract(delay, TimeSpan.TimeUnits.MINUTE);
+            //this.localTime = new TimeSpan(time);
+            //localTime = localTime.subtract(delay, TimeSpan.TimeUnits.MINUTE);
             Pair<Integer, Boolean> pos = getTrainPosition(localTime, train.getToTime());
 
             this.runPos = pos.first;
@@ -70,6 +73,9 @@ public class PathAdapter extends
             } else {
                 this.nextStopPos = -1;
             }
+        } else if (delay != 0) {
+            this.runPos = dataSet.size() - 1;
+            this.nextStopPos = -1;
         }
 
         notifyDataSetChanged();
@@ -123,7 +129,8 @@ public class PathAdapter extends
             holder.outDelayText.setVisibility(View.GONE);
 
             holder.inDelayText.setText(String.valueOf(delay));
-        } else if (delay == 0 || position <= runPos
+        } else if (delay == 0 || position < runPos
+                || (!last && runPos == position)
                 || (delay < 0 && position > nextStopPos)) {
             holder.inDelayText.setVisibility(View.GONE);
             holder.outDelayText.setVisibility(View.GONE);

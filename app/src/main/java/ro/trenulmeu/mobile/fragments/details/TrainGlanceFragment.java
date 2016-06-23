@@ -38,6 +38,11 @@ public class TrainGlanceFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_train_glance, container, false);
 
+        ((ImageView) view.findViewById(R.id.glance_type_img)).setImageResource(
+                AppContext.activity.getResources().getIdentifier("type" + train.getTypeId(),
+                        "drawable", AppContext.activity.getPackageName()));
+        ((TextView) view.findViewById(R.id.glance_type_text)).setText(train.getTrainType().getLongName());
+        ((TextView) view.findViewById(R.id.glance_operator)).setText(train.getOperator().getName());
         ((TextView) view.findViewById(R.id.glance_from)).setText(train.getFromName());
         ((TextView) view.findViewById(R.id.glance_to)).setText(train.getToName());
         ((TextView) view.findViewById(R.id.glance_time)).setText(train.getTotalTime().toString());

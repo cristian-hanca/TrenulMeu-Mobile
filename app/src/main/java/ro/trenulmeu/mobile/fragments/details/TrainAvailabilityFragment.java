@@ -42,6 +42,7 @@ public class TrainAvailabilityFragment extends Fragment {
         ManagedRecyclerView list = (ManagedRecyclerView) view.findViewById(R.id.content);
         AvailabilityAdapter aa = new AvailabilityAdapter(train.getAvailability());
         list.setAdapter(aa);
+        list.getListView().setNestedScrollingEnabled(false);
 
         final ImageView toggle = (ImageView) view.findViewById(R.id.toggle);
         content = list;

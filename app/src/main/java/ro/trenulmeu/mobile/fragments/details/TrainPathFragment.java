@@ -303,6 +303,7 @@ public class TrainPathFragment extends Fragment {
         if (!AppContext.activity.isChangingConfigurations()) {
             AppContext.cache.delete(pathAdapter_key);
             AppContext.cache.delete(delayFetch_key);
+            adapter = null;
         }
     }
 

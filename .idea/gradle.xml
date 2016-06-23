@@ -9,27 +9,25 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/TimeSpan" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/daogenerator" />
             <option value="$PROJECT_DIR$/filters" />
-            <option value="$PROJECT_DIR$/managedfragments" />
             <option value="$PROJECT_DIR$/managedrecyclerview" />
             <option value="$PROJECT_DIR$/models" />
+            <option value="$PROJECT_DIR$/timespan" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/TimeSpan" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/daogenerator" />
             <option value="$PROJECT_DIR$/filters" />
-            <option value="$PROJECT_DIR$/managedfragments" />
             <option value="$PROJECT_DIR$/managedrecyclerview" />
             <option value="$PROJECT_DIR$/models" />
+            <option value="$PROJECT_DIR$/timespan" />
           </set>
         </option>
       </GradleProjectSettings>

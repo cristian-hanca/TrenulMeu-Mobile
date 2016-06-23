@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (FragmentHelpers.backCount() == 1) {
+        } else if (FragmentHelpers.backCount() <= 1) {
             exit();
         } else {
             super.onBackPressed();

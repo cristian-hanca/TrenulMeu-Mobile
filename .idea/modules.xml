@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/daogenerator/daogenerator.iml" filepath="$PROJECT_DIR$/daogenerator/daogenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/filters/filters.iml" filepath="$PROJECT_DIR$/filters/filters.iml" />
-      <module fileurl="file://$PROJECT_DIR$/managedfragments/managedfragments.iml" filepath="$PROJECT_DIR$/managedfragments/managedfragments.iml" />
       <module fileurl="file://$PROJECT_DIR$/managedrecyclerview/managedrecyclerview.iml" filepath="$PROJECT_DIR$/managedrecyclerview/managedrecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/models/models.iml" filepath="$PROJECT_DIR$/models/models.iml" />
       <module fileurl="file://$PROJECT_DIR$/timespan/timespan.iml" filepath="$PROJECT_DIR$/timespan/timespan.iml" />
